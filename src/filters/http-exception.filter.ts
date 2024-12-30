@@ -1,15 +1,9 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
@@ -23,7 +17,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
       message =
         typeof exceptionResponse === 'string'
           ? exceptionResponse
-          : (exceptionResponse as any).message || exception.message;
+          : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (exceptionResponse as any).message || exception.message;
 
       if (Array.isArray(message)) {
         message = message[0];
@@ -32,8 +27,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({
       data: null,
-      status,
       message,
+      status,
     });
   }
 }

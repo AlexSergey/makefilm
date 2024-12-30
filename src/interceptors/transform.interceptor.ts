@@ -1,27 +1,16 @@
-import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  HttpStatus,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Response<T> {
   data: T;
-  status: number;
   message: string;
+  status: number;
 }
 
 @Injectable()
-export class TransformInterceptor<T>
-  implements NestInterceptor<T, Response<T>>
-{
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler,
-  ): Observable<Response<T>> {
+export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
     const statusCode = response.statusCode;
@@ -40,8 +29,8 @@ export class TransformInterceptor<T>
 
         return {
           data: responseData,
-          status: finalStatus,
           message: finalMessage,
+          status: finalStatus,
         };
       }),
     );
@@ -49,24 +38,24 @@ export class TransformInterceptor<T>
 
   private getDefaultMessage(status: number): string {
     switch (status) {
-      case HttpStatus.OK:
-        return 'Request successful';
-      case HttpStatus.CREATED:
-        return 'Resource created successfully';
       case HttpStatus.ACCEPTED:
         return 'Request accepted';
-      case HttpStatus.NO_CONTENT:
-        return 'Resource deleted successfully';
       case HttpStatus.BAD_REQUEST:
         return 'Bad request';
-      case HttpStatus.UNAUTHORIZED:
-        return 'Unauthorized';
+      case HttpStatus.CREATED:
+        return 'Resource created successfully';
       case HttpStatus.FORBIDDEN:
         return 'Forbidden';
-      case HttpStatus.NOT_FOUND:
-        return 'Resource not found';
       case HttpStatus.INTERNAL_SERVER_ERROR:
         return 'Internal server error';
+      case HttpStatus.NO_CONTENT:
+        return 'Resource deleted successfully';
+      case HttpStatus.NOT_FOUND:
+        return 'Resource not found';
+      case HttpStatus.OK:
+        return 'Request successful';
+      case HttpStatus.UNAUTHORIZED:
+        return 'Unauthorized';
       default:
         return 'Request processed successfully';
     }

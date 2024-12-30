@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { ClassConstructor } from 'class-transformer/types/interfaces';
 import { validateSync } from 'class-validator';
 
-function validateConfig<T extends object>(config: Record<string, unknown>, envVariablesClass: ClassConstructor<T>) {
+function validateConfig<T extends object>(config: Record<string, unknown>, envVariablesClass: ClassConstructor<T>): T {
   const validatedConfig = plainToClass(envVariablesClass, config, {
     enableImplicitConversion: true,
   });

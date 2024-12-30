@@ -1,37 +1,24 @@
-import {
-  ClassSerializerInterceptor,
-  ValidationPipe,
-  VersioningType,
-  LoggerService,
-  Logger,
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { useContainer } from 'class-validator';
 import 'dotenv/config';
+import { useContainer } from 'class-validator';
+import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { AllConfigType } from './config/config.type';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { TransformInterceptor } from './interceptors/transform.interceptor';
 // import {LoggerService} from './logger/logger.service';
 import { ResolvePromisesInterceptor } from './utils/serializer.interceptor';
 import validationOptions from './utils/validation-options';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { TransformInterceptor } from './interceptors/transform.interceptor';
-import {
-  ExpressAdapter,
-  NestExpressApplication,
-} from '@nestjs/platform-express';
-import helmet from 'helmet';
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule,
-    new ExpressAdapter(),
-    {
-      cors: true,
-    },
-  );
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {
+    cors: true,
+  });
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'Content-Range');
     next();
@@ -43,12 +30,9 @@ async function bootstrap() {
   // const logger = await app.resolve(Logger);
   app.enableShutdownHooks();
 
-  app.setGlobalPrefix(
-    configService.getOrThrow('app.apiPrefix', { infer: true }),
-    {
-      exclude: ['/'],
-    },
-  );
+  app.setGlobalPrefix(configService.getOrThrow('app.apiPrefix', { infer: true }), {
+    exclude: ['/'],
+  });
   app.enableVersioning({
     type: VersioningType.URI,
   });

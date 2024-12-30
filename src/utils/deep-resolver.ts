@@ -1,4 +1,5 @@
-async function deepResolvePromises(input) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function deepResolvePromises(input: any): Promise<any> {
   if (input instanceof Promise) {
     return await input;
   }

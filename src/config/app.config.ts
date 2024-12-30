@@ -11,41 +11,44 @@ enum Environment {
 }
 
 class EnvironmentVariablesValidator {
-  @IsString()
   @IsOptional()
+  @IsString()
   ADMIN_EMAIL: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   API_PREFIX: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   APP_FALLBACK_LANGUAGE: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   APP_HEADER_LANGUAGE: string;
 
   @IsInt()
-  @Min(0)
-  @Max(65535)
   @IsOptional()
+  @Max(65535)
+  @Min(0)
   APP_PORT: number;
 
   @IsString()
   APP_URL: string;
 
-  @IsUrl({ require_tld: false })
   @IsOptional()
+  // eslint-disable-next-line camelcase
+  @IsUrl({ require_tld: false })
   BACKEND_DOMAIN: string;
 
-  @IsUrl({ require_tld: false })
   @IsOptional()
+  // eslint-disable-next-line camelcase
+  @IsUrl({ require_tld: false })
   FRONTEND_DOMAIN: string;
 
-  @IsUrl({ require_tld: false })
   @IsOptional()
+  // eslint-disable-next-line camelcase
+  @IsUrl({ require_tld: false })
   FRONTEND_REDIRECT: string;
 
   @IsEnum(Environment)

@@ -1,6 +1,6 @@
 import { HttpStatus, UnprocessableEntityException, ValidationError, ValidationPipeOptions } from '@nestjs/common';
 
-function generateErrors(errors: ValidationError[]) {
+function generateErrors(errors: ValidationError[]): Record<string, ValidationError> {
   return errors.reduce(
     (accumulator, currentValue) => ({
       ...accumulator,
