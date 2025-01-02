@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: docker build -t makefilm/api:lint --target lint .
+
+      - name: Run Lint
+        run: docker run --rm makefilm/api:lint
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: docker build -t makefilm/api:build --target build .
+
+      - name: Test Docker Build
+        run: docker run --rm makefilm/api:build node dist/main.js --help
+
+  e2e-tests:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: docker build -t makefilm/api:e2e --target test .
+
+      - name: Run E2E Tests
+        run: docker run --rm makefilm/api:e2e
