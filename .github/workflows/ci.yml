@@ -1,14 +1,33 @@
+name: Makefilm
+
 on:
   push:
     branches:
-      - master
-      - dev
+      - main
   pull_request:
     branches:
-      - master
-      - dev
+      - main
+
+env:
+  APP_NAME: 'api'
+  APP_URL: 'http://localhost:3005'
+  APP_PORT: 3005
+  API_PREFIX: api
 
 jobs:
+  create-envfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          directory: './'
+          file_name: .env
+          envkey_APP_NAME: 'api'
+          envkey_APP_URL: 'http://localhost:3005'
+          envkey_APP_PORT: 3005
+          envkey_API_PREFIX: api
+
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
@@ -17,11 +36,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t makefilm/api:lint --target lint .
-
-      - name: Run Lint
-        run: docker run --rm makefilm/api:lint
+      - name: Set up Docker Compose
+        run: docker-compose --env-file ./.env -f docker-compose.yml run lint
 
   build:
     name: Build Application
@@ -31,11 +47,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t makefilm/api:build --target build .
-
-      - name: Test Docker Build
-        run: docker run --rm makefilm/api:build node dist/main.js --help
+      - name: Set up Docker Compose
+        run: docker-compose --env-file ./.env -f docker-compose.yml run build
 
   e2e-tests:
     name: Run E2E Tests
@@ -46,8 +59,5 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t makefilm/api:e2e --target test .
-
-      - name: Run E2E Tests
-        run: docker run --rm makefilm/api:e2e
+      - name: Set up Docker Compose
+        run: docker-compose --env-file ./.env -f docker-compose.yml run e2e

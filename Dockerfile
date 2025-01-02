@@ -19,5 +19,3 @@ FROM base AS test
 COPY . .
 RUN npm run build
 RUN npm run test:e2e
-
-CMD ["node", "dist/main.js"]

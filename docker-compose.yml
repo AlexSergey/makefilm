@@ -1,12 +1,32 @@
 version: "3"
 
 services:
+  lint:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: lint
+    command: npm run lint
+
+  build:
+    image: makefilm/api
+    container_name: makefilm-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: build
+    command: npm run build
+
+  e2e:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: test
+    command: npm run test:e2e
   api:
     image: makefilm/api
     build:
       context: .
-      dockerfile: ./Dockerfile
     restart: always
-    container_name: makefilm-api
     ports:
       - 3005:3005
