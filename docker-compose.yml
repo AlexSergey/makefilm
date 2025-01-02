@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  api:
+    image: makefilm/api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: makefilm-api
+    ports:
+      - 3005:3005
