@@ -23,10 +23,15 @@ services:
       dockerfile: ./Dockerfile
       target: test
     command: npm run test:e2e
+
   api:
     image: makefilm/api
+    container_name: makefilm-api
     build:
       context: .
+      dockerfile: ./Dockerfile
+      target: build
     restart: always
+    command: npm run build
     ports:
       - 3005:3005
