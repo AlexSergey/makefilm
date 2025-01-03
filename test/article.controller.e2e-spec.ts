@@ -1,10 +1,12 @@
 import { ClassSerializerInterceptor, INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 
 import { ArticleController } from '../src/api/article/article.controller';
 import { PrismaService } from '../src/common/database/prisma.service';
+import { LoggerService } from '../src/common/logger/logger.service';
 import { HttpExceptionFilter } from '../src/filters/http-exception.filter';
 import { TransformInterceptor } from '../src/interceptors/transform.interceptor';
 import { ArticleRepositoryService } from '../src/modules/article/article.repository';
@@ -35,7 +37,17 @@ describe('ArticleController (e2e)', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ArticleController],
+      imports: [],
       providers: [
+        LoggerService,
+        {
+          provide: ConfigService,
+          useValue: {
+            getOrThrow: jest.fn(() => {
+              return 'error';
+            }),
+          },
+        },
         ArticleService,
         PrismaService,
         { provide: ArticleRepositoryService, useValue: mockArticleRepository },

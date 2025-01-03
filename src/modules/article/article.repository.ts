@@ -9,7 +9,7 @@ import { ArticleEntityInterface } from './types/article-entity.interface';
 export class ArticleRepositoryService {
   constructor(private prisma: PrismaService) {}
 
-  async create({ description, title, userId }: CreateArticleDto) {
+  async create({ description, title, userId }: CreateArticleDto): Promise<ArticleEntityInterface> {
     return this.prisma.article.create({
       data: {
         description,

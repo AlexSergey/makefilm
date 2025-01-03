@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
-import { PrismaService } from '../../common/database/prisma.service';
 import { ArticleRepositoryService } from './article.repository';
 import { CreateArticleDto, UpdateArticleDto } from './dto';
 import { ArticleEntityInterface } from './types/article-entity.interface';
@@ -9,10 +8,7 @@ import { Article } from './values/article.value';
 
 @Injectable()
 export class ArticleService {
-  constructor(
-    private prisma: PrismaService,
-    private articleRepository: ArticleRepositoryService,
-  ) {}
+  constructor(private articleRepository: ArticleRepositoryService) {}
 
   convertEntityToValue(articleEntity: ArticleEntityInterface): Article {
     return new Article({

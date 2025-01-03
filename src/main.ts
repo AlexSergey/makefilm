@@ -8,6 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
+import { LoggerService } from './common/logger/logger.service';
 import { AllConfigType } from './config/config.type';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
@@ -25,7 +26,7 @@ async function bootstrap(): Promise<void> {
   app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   app.use(helmet());
   const configService = app.get(ConfigService<AllConfigType>);
-  // const logger = await app.resolve(Logger);
+  const logger = await app.resolve(LoggerService);
   app.enableShutdownHooks();
 
   app.setGlobalPrefix(configService.getOrThrow('app.apiPrefix', { infer: true }), {
@@ -61,9 +62,7 @@ async function bootstrap(): Promise<void> {
   SwaggerModule.setup('docs', app, document);
 
   await app.listen(configService.getOrThrow('app.port', { infer: true }));
-  /* logger.log(
-    `App ready on port ${configService.getOrThrow('app.port', { infer: true })}`,
-  );*/
+  logger.log(`App ready on port ${configService.getOrThrow('app.port', { infer: true })}`);
 }
 
 bootstrap();
