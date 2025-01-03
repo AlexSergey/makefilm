@@ -23,7 +23,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: "api"
-          envkey_APP_URL: 'http://localhost:3005'
+          envkey_APP_URL: "http://localhost:3005"
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
 
@@ -44,7 +44,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: "api"
-          envkey_APP_URL: 'http://localhost:3005'
+          envkey_APP_URL: "http://localhost:3005"
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
 
@@ -65,7 +65,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: "api"
-          envkey_APP_URL: 'http://localhost:3005'
+          envkey_APP_URL: "http://localhost:3005"
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
 
@@ -86,7 +86,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: "api"
-          envkey_APP_URL: 'http://localhost:3005'
+          envkey_APP_URL: "http://localhost:3005"
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
 

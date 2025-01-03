@@ -1,0 +1,15 @@
+### GET request to example server
+GET http://localhost:3005/api/articles
+
+###
+
+### POST request to example server
+POST http://localhost:3005/api/articles
+Content-Type: application/json
+
+{
+  "title": "test title",
+  "description": "test description",
+  "userId": "1"
+}
+###

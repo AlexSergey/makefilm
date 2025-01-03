@@ -29,6 +29,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
       data: null,
       message,
       status,
+      // TODO: Fix this when will add error handling
+      success: true,
     });
   }
 }

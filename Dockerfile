@@ -18,4 +18,5 @@ RUN npm run build
 FROM base AS test
 COPY . .
 RUN npm run build
+RUN npm test
 RUN npm run test:e2e

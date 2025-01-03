@@ -21,7 +21,6 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
         const message = this.getDefaultMessage(statusCode);
         const finalMessage = responseData.message || message;
         const finalStatus = responseData.status || statusCode;
-
         if (responseData) {
           delete responseData.message;
           delete responseData.status;
@@ -31,6 +30,8 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
           data: responseData,
           message: finalMessage,
           status: finalStatus,
+          // TODO: Fix this when will add error handling
+          success: true,
         };
       }),
     );

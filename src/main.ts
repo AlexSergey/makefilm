@@ -1,10 +1,10 @@
-import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nestjs/common';
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
+import { ClassSerializerInterceptor, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import 'dotenv/config';
-import { useContainer } from 'class-validator';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
@@ -13,7 +13,6 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 // import {LoggerService} from './logger/logger.service';
 import { ResolvePromisesInterceptor } from './utils/serializer.interceptor';
-import validationOptions from './utils/validation-options';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {
@@ -25,7 +24,6 @@ async function bootstrap(): Promise<void> {
   });
   app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   app.use(helmet());
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const configService = app.get(ConfigService<AllConfigType>);
   // const logger = await app.resolve(Logger);
   app.enableShutdownHooks();
@@ -41,7 +39,6 @@ async function bootstrap(): Promise<void> {
   // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
   // Global pipes
-  app.useGlobalPipes(new ValidationPipe(validationOptions));
   // Global interceptor
   app.useGlobalInterceptors(
     new ResolvePromisesInterceptor(),
@@ -57,6 +54,8 @@ async function bootstrap(): Promise<void> {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
+
+  patchNestjsSwagger();
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
