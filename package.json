@@ -17,6 +17,7 @@
     "lint:ts": "tsc --noEmit",
     "pre-commit": "lint-staged",
     "prepare": "husky",
+    "prisma:generate": "prisma generate",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
     "start:dev": "nest start --watch",

@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, INestApplication, Logger } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
@@ -12,6 +12,14 @@ import { ArticleService } from '../src/modules/article/article.service';
 import { CreateArticleDto, UpdateArticleDto } from '../src/modules/article/dto';
 import { ResolvePromisesInterceptor } from '../src/utils/serializer.interceptor';
 
+// TODO: Temporary mock Prisma
+jest.mock('@prisma/client', () => {
+  return {
+    PrismaClient: jest.fn().mockImplementation(() => {
+      return {};
+    }),
+  };
+});
 describe('ArticleController (e2e)', () => {
   let app: INestApplication;
 

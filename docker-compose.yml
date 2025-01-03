@@ -17,11 +17,18 @@ services:
       target: build
     command: npm run build
 
-  e2e:
+  unit_tests:
     build:
       context: .
       dockerfile: ./Dockerfile
-      target: test
+      target: unit_tests
+    command: npm test
+
+  e2e_tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: e2e_tests
     command: npm run test:e2e
 
   api:

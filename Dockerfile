@@ -2,7 +2,9 @@
 FROM node:22-alpine AS base
 WORKDIR /app
 COPY package*.json ./
+COPY prisma ./prisma
 RUN npm install
+RUN npm run prisma:generate
 
 # Lint
 FROM base AS lint
@@ -14,9 +16,13 @@ FROM base AS build
 COPY . .
 RUN npm run build
 
+# Unit tests
+FROM base AS unit_tests
+COPY . .
+RUN npm test
+
 # E2E tests
-FROM base AS test
+FROM base AS e2e_tests
 COPY . .
 RUN npm run build
-RUN npm test
 RUN npm run test:e2e
