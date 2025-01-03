@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: ./Dockerfile
       target: lint
-    command: npm run lint
 
   build:
     image: makefilm/api
@@ -15,31 +14,27 @@ services:
       context: .
       dockerfile: ./Dockerfile
       target: build
-    command: npm run build
 
   unit_tests:
     build:
       context: .
       dockerfile: ./Dockerfile
       target: unit_tests
-    command: npm test
 
   e2e_tests:
     build:
       context: .
       dockerfile: ./Dockerfile
       target: e2e_tests
-    command: npm run test:e2e
 
-  api:
+  prod:
     image: makefilm/api
     container_name: makefilm-api
     build:
       context: .
       dockerfile: ./Dockerfile
-      target: build
+      target: prod
     restart: always
-    command: npm run build
     ports:
       - 3005:3005
 

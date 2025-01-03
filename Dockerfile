@@ -26,3 +26,14 @@ FROM base AS e2e_tests
 COPY . .
 RUN npm run build
 RUN npm run test:e2e
+
+# Production
+FROM node:22-alpine AS prod
+WORKDIR /app
+COPY .env ./
+COPY package*.json ./
+COPY prisma ./prisma
+COPY --from=build /app/dist /app/dist
+RUN npm ci --prod --ignore-scripts
+RUN npm run prisma:generate
+CMD ["npm", "run", "start:prod"]

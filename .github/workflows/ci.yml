@@ -120,7 +120,7 @@ jobs:
 
       - name: Build and Tag Docker Image
         run: |
-          docker compose --env-file ./.env -f docker-compose.yml build api
+          docker compose --env-file ./.env -f docker-compose.yml build prod
           docker tag makefilm/api ghcr.io/alexsergey/makefilm-api:latest
 
       - name: Push Docker Image to GitHub Container Registry
