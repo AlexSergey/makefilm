@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  unit_tests:
+    build:
+      context: ../
+      dockerfile: ../Dockerfile
+      target: unit_tests
+
+  e2e_tests:
+    build:
+      context: ../
+      dockerfile: ../Dockerfile
+      target: e2e_tests

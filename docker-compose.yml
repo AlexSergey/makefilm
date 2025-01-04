@@ -1,35 +1,7 @@
 version: "3"
 
 services:
-  lint:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      target: lint
-
-  build:
-    image: makefilm/api
-    container_name: makefilm-api
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      target: build
-
-  unit_tests:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      target: unit_tests
-
-  e2e_tests:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      target: e2e_tests
-
-  prod:
-    image: makefilm/api
-    container_name: makefilm-api
+  dev:
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -37,6 +9,8 @@ services:
     restart: always
     ports:
       - 3005:3005
+    command:
+      - npm run start:dev
 
   makefilm_db:
     image: postgres:13
