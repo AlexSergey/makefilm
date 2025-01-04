@@ -1,3 +1,4 @@
+import { LogLevel } from '@nestjs/common';
 import { registerAs } from '@nestjs/config';
 import { IsOptional, IsString } from 'class-validator';
 
@@ -11,12 +12,14 @@ class EnvironmentVariablesValidator {
 
   @IsOptional()
   @IsString()
-  LOG_LEVEL: string[];
+  LOG_LEVEL: LogLevel[];
 }
 
 export default registerAs<LoggerConfig>('logger', () => {
   validateConfig(process.env, EnvironmentVariablesValidator);
-  const logLevels = typeof process.env.LOG_LEVEL === 'string' ? process.env.LOG_LEVEL.split(' ') : false;
+  const logLevels = (typeof process.env.LOG_LEVEL === 'string' ? process.env.LOG_LEVEL.split(' ') : false) as
+    | false
+    | LogLevel[];
 
   return {
     header: process.env.CORRELATION_ID_HEADER || 'X-Correlation-ID',

@@ -135,6 +135,15 @@ describe('ArticleService', () => {
 
   describe('update', () => {
     it('should update an article', async () => {
+      jest.spyOn(articleRepository, 'findOne').mockResolvedValue({
+        createdAt: new Date(),
+        description: 'Test Description',
+        id: 1,
+        title: 'Test Title',
+        updatedAt: new Date(),
+        userId: 1,
+      });
+
       const updateArticleDto: UpdateArticleDto = {
         description: 'Updated Description',
         title: 'Updated Title',

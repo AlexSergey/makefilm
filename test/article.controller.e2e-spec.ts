@@ -14,6 +14,7 @@ import { ArticleService } from '../src/modules/article/article.service';
 import { CreateArticleDto, UpdateArticleDto } from '../src/modules/article/dto';
 import { ResolvePromisesInterceptor } from '../src/utils/serializer.interceptor';
 
+// eslint-disable-next-line no-warning-comments
 // TODO: Temporary mock Prisma
 jest.mock('@prisma/client', () => {
   return {
@@ -172,6 +173,8 @@ describe('ArticleController (e2e)', () => {
 
   describe('PATCH /articles/:id', () => {
     it('should update an article by ID', async () => {
+      mockArticleRepository.findOne.mockResolvedValue({ description: 'Content 1', id: 1, title: 'Article 1' });
+
       const updateArticleDto: UpdateArticleDto = { title: 'Updated Title' };
       const updatedArticle = { description: 'Content 1', id: 1, title: 'Updated Title' };
 
@@ -189,8 +192,6 @@ describe('ArticleController (e2e)', () => {
       const updateArticleDto: UpdateArticleDto = { title: 'Updated Title' };
 
       await request(app.getHttpServer()).patch('/articles/999').send(updateArticleDto).expect(404);
-
-      expect(mockArticleRepository.update).toHaveBeenCalledWith(999, updateArticleDto);
     });
   });
 });

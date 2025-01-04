@@ -1,6 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
 
+import { checkStatus } from '../utils/error-checker';
+
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
@@ -29,8 +31,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       data: null,
       message,
       status,
-      // TODO: Fix this when will add error handling
-      success: true,
+      success: checkStatus(status),
     });
   }
 }

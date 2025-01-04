@@ -45,7 +45,7 @@ export class ArticleService {
     const articleEntity = await this.articleRepository.findOne(id);
 
     if (!articleEntity) {
-      throw new NotFoundException('Article does not exist');
+      throw new NotFoundException('Article not found');
     }
 
     return this.convertEntityToValue(articleEntity);
@@ -55,19 +55,25 @@ export class ArticleService {
     const articleEntity = await this.articleRepository.findOne(id);
 
     if (!articleEntity) {
-      throw new NotFoundException('Article does not exist');
+      throw new NotFoundException('Article not found');
     }
 
     await this.articleRepository.remove(id);
   }
 
   async update(id: number, data: UpdateArticleDto): Promise<Article> {
-    const articleEntity = await this.articleRepository.update(id, data);
+    const articleEntity = await this.articleRepository.findOne(id);
 
     if (!articleEntity) {
-      throw new NotFoundException('Article does not exist');
+      throw new NotFoundException('Article not found');
     }
 
-    return this.convertEntityToValue(articleEntity);
+    const articleUpdatedEntity = await this.articleRepository.update(id, data);
+
+    if (!articleUpdatedEntity) {
+      throw new NotFoundException('Article not found');
+    }
+
+    return this.convertEntityToValue(articleUpdatedEntity);
   }
 }

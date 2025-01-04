@@ -1,0 +1,5 @@
+export enum MetricType {
+  APPLICATION = 'APPLICATION',
+  DATABASE = 'DATABASE',
+  UNKNOWN = 'UNKNOWN',
+}

@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import loggerConfig from './common/logger/config/logger.config';
 import { LoggerModule } from './common/logger/logger.module';
+import { MetricsModule } from './common/metrics/metrics.module';
 import appConfig from './config/app.config';
 import { ArticleModule } from './modules/article/article.module';
 
@@ -15,6 +16,7 @@ import { ArticleModule } from './modules/article/article.module';
       load: [appConfig, loggerConfig],
     }),
     LoggerModule,
+    MetricsModule,
     ArticleModule,
   ],
   providers: [],

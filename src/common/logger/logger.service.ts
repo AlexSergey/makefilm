@@ -2,6 +2,7 @@ import { LoggerService as BaseLoggerService, ConsoleLogger, Inject, Injectable, 
 import { ConfigService } from '@nestjs/config';
 import { INQUIRER } from '@nestjs/core';
 
+import { LoggerConfig } from './config/logger-config.type';
 import { CorrelationIdService } from './correlation.service';
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -12,7 +13,8 @@ export class LoggerService extends ConsoleLogger implements BaseLoggerService {
     private readonly configService: ConfigService,
   ) {
     super(parentClass?.constructor?.name);
-    const logLevel = this.configService.getOrThrow('logger.logLevel');
+
+    const logLevel = this.configService.getOrThrow<LoggerConfig['logLevel']>('logger.logLevel');
 
     this.setLogLevels(logLevel ? logLevel : ['log', 'fatal', 'error', 'warn', 'debug', 'verbose']);
   }

@@ -2,6 +2,8 @@ import { CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { checkStatus } from '../utils/error-checker';
+
 export interface Response<T> {
   data: T;
   message: string;
@@ -30,8 +32,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
           data: responseData,
           message: finalMessage,
           status: finalStatus,
-          // TODO: Fix this when will add error handling
-          success: true,
+          success: checkStatus(finalStatus),
         };
       }),
     );

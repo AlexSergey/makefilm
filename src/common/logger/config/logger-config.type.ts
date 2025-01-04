@@ -1,4 +1,6 @@
+import { LogLevel } from '@nestjs/common';
+
 export interface LoggerConfig {
   header: string;
-  logLevel: string[];
+  logLevel: LogLevel[];
 }
