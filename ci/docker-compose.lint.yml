@@ -4,5 +4,5 @@ services:
   lint:
     build:
       context: ../
-      dockerfile: ../Dockerfile
+      dockerfile: ./Dockerfile
       target: lint

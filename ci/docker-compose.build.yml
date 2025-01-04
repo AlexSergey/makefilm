@@ -4,5 +4,5 @@ services:
   build:
     build:
       context: ../
-      dockerfile: ../Dockerfile
+      dockerfile: ./Dockerfile
       target: build
