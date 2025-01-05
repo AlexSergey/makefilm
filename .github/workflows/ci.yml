@@ -11,21 +11,54 @@ on:
       - dev
 
 jobs:
-  lint:
-    name: Lint Code
+  make-envfile:
+    name: Make envfile
     runs-on: ubuntu-latest
+    outputs:
+      envfile: ${{ steps.create-envfile.outputs.envfile }}
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Make envfile
+        id: create-envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_APP_NAME: "api"
           envkey_APP_URL: "http://localhost:3005"
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
+          envkey_LOG_LEVEL: "fatal error warn"
+          envkey_DATABASE_URL: "postgresql://poll_user:poll_password@localhost:5432/poll_db?schema=public"
+
+      - name: Rename env file
+        run: mv .env temp_env
+
+      - name: Upload envfile as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: envfile
+          path: ${{ github.workspace }}/temp_env
+          if-no-files-found: error
+
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    needs: make-envfile
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Download envfile
+        uses: actions/download-artifact@v4
+        with:
+          name: envfile
+          path: ./
+
+      - name: Rename env file
+        run: mv temp_env .env
 
       - name: Set up Docker Compose
         run: docker compose --env-file ./.env -f ci/docker-compose.lint.yml run lint
@@ -33,20 +66,20 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-    needs:
-      - lint
+    needs: make-envfile
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
+      - name: Download envfile
+        uses: actions/download-artifact@v4
         with:
-          envkey_APP_NAME: "api"
-          envkey_APP_URL: "http://localhost:3005"
-          envkey_APP_PORT: 3005
-          envkey_API_PREFIX: api
+          name: envfile
+          path: ./
+
+      - name: Rename env file
+        run: mv temp_env .env
 
       - name: Set up Docker Compose
         run: docker compose --env-file ./.env -f ci/docker-compose.build.yml run build
@@ -54,20 +87,20 @@ jobs:
   unit-tests:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    needs:
-      - build
+    needs: build
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
+      - name: Download envfile
+        uses: actions/download-artifact@v4
         with:
-          envkey_APP_NAME: "api"
-          envkey_APP_URL: "http://localhost:3005"
-          envkey_APP_PORT: 3005
-          envkey_API_PREFIX: api
+          name: envfile
+          path: ./
+
+      - name: Rename env file
+        run: mv temp_env .env
 
       - name: Set up Docker Compose
         run: docker compose --env-file ./.env -f ci/docker-compose.tests.yml run unit_tests
@@ -75,20 +108,20 @@ jobs:
   e2e-tests:
     name: Run E2E Tests
     runs-on: ubuntu-latest
-    needs:
-      - unit-tests
+    needs: unit-tests
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
+      - name: Download envfile
+        uses: actions/download-artifact@v4
         with:
-          envkey_APP_NAME: "api"
-          envkey_APP_URL: "http://localhost:3005"
-          envkey_APP_PORT: 3005
-          envkey_API_PREFIX: api
+          name: envfile
+          path: ./
+
+      - name: Rename env file
+        run: mv temp_env .env
 
       - name: Set up Docker Compose
         run: docker compose --env-file ./.env -f ci/docker-compose.tests.yml run e2e_tests
@@ -96,20 +129,20 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs:
-      - e2e-tests
+    needs: e2e-tests
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
+      - name: Download envfile
+        uses: actions/download-artifact@v4
         with:
-          envkey_APP_NAME: "api"
-          envkey_APP_URL: "http://localhost:3005"
-          envkey_APP_PORT: 3005
-          envkey_API_PREFIX: api
+          name: envfile
+          path: ./
+
+      - name: Rename env file
+        run: mv temp_env .env
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
@@ -125,3 +158,28 @@ jobs:
 
       - name: Push Docker Image to GitHub Container Registry
         run: docker push ghcr.io/alexsergey/makefilm-api:latest
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: release
+    if: |
+      github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Download envfile
+        uses: actions/download-artifact@v4
+        with:
+          name: envfile
+          path: ./
+
+      - name: Deploy to production (master)
+        if: github.ref == 'refs/heads/master'
+        run: echo "Deploying to production environment (master)..."
+
+      - name: Deploy to staging (dev)
+        if: github.ref == 'refs/heads/dev'
+        run: echo "Deploying to staging environment (dev)..."
