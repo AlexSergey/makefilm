@@ -30,7 +30,15 @@ jobs:
           envkey_APP_PORT: 3005
           envkey_API_PREFIX: api
           envkey_LOG_LEVEL: "fatal error warn"
-          envkey_DATABASE_URL: "postgresql://poll_user:poll_password@localhost:5432/poll_db?schema=public"
+          envkey_DATABASE_TYPE: "postgres"
+          envkey_DATABASE_HOST: "localhost"
+          envkey_DATABASE_PORT: 5432
+          envkey_DATABASE_USERNAME: "poll_user"
+          envkey_DATABASE_PASSWORD: "poll_password"
+          envkey_DATABASE_NAME: "poll_db"
+          envkey_DATABASE_SSL_ENABLED: false
+          envkey_DATABASE_MAX_CONNECTIONS: 1
+          envkey_DATABASE_SHOW_LOGS: false
 
       - name: Rename env file
         run: mv .env temp_env
@@ -114,17 +122,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Download envfile
-        uses: actions/download-artifact@v4
-        with:
-          name: envfile
-          path: ./
-
-      - name: Rename env file
-        run: mv temp_env .env
-
       - name: Set up Docker Compose
-        run: docker compose --env-file ./.env -f ci/docker-compose.tests.yml run e2e_tests
+        run: docker compose --env-file ./.env.ci -f ci/docker-compose.tests.yml run e2e_tests
 
   release:
     name: Release

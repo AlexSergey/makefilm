@@ -9,24 +9,22 @@ Content-Type: application/json
 
 {
   "title": "test title",
-  "description": "test description",
-  "userId": 1
+  "description": "test description"
 }
 ###
 
 ### PUT request to example server
-PATCH http://localhost:3005/api/articles/10
+PATCH http://localhost:3005/api/articles/3f40fe43-606c-4975-803d-7bdae11cc376
 Content-Type: application/json
 
 {
   "title": "test title2",
-  "description": "test description",
-  "userId": 1
+  "description": "test description"
 }
 
 ###
 
 ### PUT request to example server
-DELETE http://localhost:3005/api/articles/10
+DELETE http://localhost:3005/api/articles/3f40fe43-606c-4975-803d-7bdae11cc376
 
 ###

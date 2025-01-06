@@ -1,10 +1,18 @@
-import { createZodDto } from '@anatine/zod-nestjs';
-import { z } from 'zod';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
-const createArticleSchema = z.object({
-  description: z.string(),
-  title: z.string(),
-  userId: z.number(),
-});
+export class CreateArticleDto {
+  @ApiProperty({
+    example: 'description',
+    required: true,
+  })
+  @IsNotEmpty()
+  description: string;
 
-export class CreateArticleDto extends createZodDto(createArticleSchema) {}
+  @ApiProperty({
+    example: 'title',
+    required: true,
+  })
+  @IsNotEmpty()
+  title: string;
+}

@@ -1,4 +1,3 @@
-import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import { ClassSerializerInterceptor, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -59,8 +58,6 @@ async function bootstrap(): Promise<void> {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-
-  patchNestjsSwagger();
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);

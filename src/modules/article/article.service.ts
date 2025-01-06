@@ -1,79 +1,81 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import { ArticleRepositoryService } from './article.repository';
+import { Filter } from '../../common/database/decorators/filter.decorator';
+import { Pagination } from '../../common/database/decorators/pagination.decorator';
+import { Sorting } from '../../common/database/decorators/sort.decorator';
+import { dataQuery } from '../../common/database/utils/data-query.util';
 import { CreateArticleDto, UpdateArticleDto } from './dto';
-import { ArticleEntityInterface } from './types/article-entity.interface';
+import { ArticleEntity } from './entities/article.entity';
 import { Article } from './values/article.value';
 
 @Injectable()
 export class ArticleService {
-  constructor(private articleRepository: ArticleRepositoryService) {}
+  constructor(@InjectRepository(ArticleEntity) private articleRepository: Repository<ArticleEntity>) {}
 
-  convertEntityToValue(articleEntity: ArticleEntityInterface): Article {
+  convertEntityToValue(articleEntity: ArticleEntity): Article {
     return new Article({
       description: articleEntity.description,
       id: articleEntity.id,
       title: articleEntity.title,
-      userId: articleEntity.userId,
     });
   }
 
   async create(data: CreateArticleDto): Promise<Article> {
-    const articleEntity = await this.articleRepository.create(data);
+    const article = this.articleRepository.create(data);
+    const articleEntity = await this.articleRepository.save(article);
 
     return this.convertEntityToValue(articleEntity);
   }
 
-  async findAll(params: {
-    cursor?: Prisma.ArticleWhereUniqueInput;
-    orderBy?: Prisma.ArticleOrderByWithRelationInput;
-    skip?: number;
-    take?: number;
-    where?: Prisma.ArticleWhereInput;
-  }): Promise<Article[]> {
-    const articleEntities = await this.articleRepository.findAll(params);
+  async findAll(params: { filter?: Filter; pagination?: Pagination; search?: string; sort?: Sorting }): Promise<{
+    articles: Article[];
+    total: number;
+  }> {
+    const q = dataQuery(['title'], params);
 
-    if (!articleEntities) {
-      return [];
-    }
+    const [articles, total] = await this.articleRepository.findAndCount(q);
 
-    return articleEntities.map((articleEntity) => this.convertEntityToValue(articleEntity));
+    return {
+      articles: articles.map((article) => new Article(article)),
+      total,
+    };
   }
 
-  async findOne(id: number): Promise<Article> {
-    const articleEntity = await this.articleRepository.findOne(id);
+  async findOne(id: string): Promise<Article> {
+    try {
+      const articleEntity = await this.articleRepository.findOne({
+        where: { id },
+      });
 
-    if (!articleEntity) {
+      return this.convertEntityToValue(articleEntity);
+    } catch {
       throw new NotFoundException('Article not found');
     }
-
-    return this.convertEntityToValue(articleEntity);
   }
 
-  async remove(id: number): Promise<void> {
-    const articleEntity = await this.articleRepository.findOne(id);
-
-    if (!articleEntity) {
+  async remove(id: string): Promise<void> {
+    try {
+      await this.articleRepository.delete({ id });
+    } catch {
       throw new NotFoundException('Article not found');
     }
-
-    await this.articleRepository.remove(id);
   }
 
-  async update(id: number, data: UpdateArticleDto): Promise<Article> {
-    const articleEntity = await this.articleRepository.findOne(id);
+  async update(id: string, data: UpdateArticleDto): Promise<Article> {
+    try {
+      const articleEntity = await this.articleRepository.findOne({
+        where: { id },
+      });
+      const articleUpdatedEntity = await this.articleRepository.save({
+        ...{ description: articleEntity.description, id: articleEntity.id, title: articleEntity.title },
+        ...data,
+      });
 
-    if (!articleEntity) {
+      return this.convertEntityToValue(articleUpdatedEntity);
+    } catch {
       throw new NotFoundException('Article not found');
     }
-
-    const articleUpdatedEntity = await this.articleRepository.update(id, data);
-
-    if (!articleUpdatedEntity) {
-      throw new NotFoundException('Article not found');
-    }
-
-    return this.convertEntityToValue(articleUpdatedEntity);
   }
 }

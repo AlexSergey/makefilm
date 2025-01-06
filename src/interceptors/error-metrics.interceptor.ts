@@ -1,9 +1,9 @@
 import { CallHandler, ExecutionContext, HttpException, Injectable, NestInterceptor } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Prisma } from '@prisma/client';
 import { Request } from 'express';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TypeORMError } from 'typeorm';
 
 import { MetricType } from '../common/metrics/metrics.interface';
 import { MetricsService } from '../common/metrics/metrics.service';
@@ -22,7 +22,7 @@ export class ErrorMetricsInterceptor implements NestInterceptor {
     return next.handle().pipe(
       catchError((err) => {
         const request: Request = context.switchToHttp().getRequest();
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err instanceof TypeORMError) {
           this.updateMetrics(MetricType.DATABASE);
         } else if (err instanceof HttpException) {
           this.updateMetrics(MetricType.APPLICATION);

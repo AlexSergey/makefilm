@@ -1,14 +1,16 @@
-import { ZodValidationPipe } from '@anatine/zod-nestjs';
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { Filter, FilterParams } from '../../common/database/decorators/filter.decorator';
+import { Pagination, PaginationParams } from '../../common/database/decorators/pagination.decorator';
+import { SearchParams } from '../../common/database/decorators/search.decorator';
+import { Sorting, SortParams } from '../../common/database/decorators/sort.decorator';
 import { ArticleService } from '../../modules/article/article.service';
-import { CreateArticleDto, FilterArticleDto, UpdateArticleDto } from '../../modules/article/dto';
+import { CreateArticleDto, UpdateArticleDto } from '../../modules/article/dto';
 import { Article } from '../../modules/article/values/article.value';
 
 @ApiTags('articles')
 @Controller('articles')
-@UsePipes(ZodValidationPipe)
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
@@ -39,8 +41,16 @@ export class ArticleController {
   @ApiResponse({ description: 'List of articles', status: HttpStatus.OK, type: [Article] })
   @ApiResponse({ description: 'Error while getting articles', status: HttpStatus.BAD_REQUEST })
   @Get()
-  findAll(@Query() { orderBy, skip, take, where }: FilterArticleDto): Promise<Article[]> {
-    return this.articleService.findAll({ orderBy, skip, take, where });
+  findAll(
+    @PaginationParams() pagination: Pagination,
+    @SortParams() sort: Sorting,
+    @SearchParams() search: null | string,
+    @FilterParams() filter: Filter,
+  ): Promise<{
+    articles: Article[];
+    total: number;
+  }> {
+    return this.articleService.findAll({ filter, pagination, search, sort });
   }
 
   @ApiOperation({ summary: 'Get article by ID' })
@@ -49,7 +59,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Article> {
-    return this.articleService.findOne(+id);
+    return this.articleService.findOne(id);
   }
 
   @ApiOperation({ summary: 'Removing an article by ID' })
@@ -58,7 +68,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
-    return this.articleService.remove(+id);
+    return this.articleService.remove(id);
   }
 
   @ApiBody({ type: UpdateArticleDto })
@@ -69,6 +79,6 @@ export class ArticleController {
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto): Promise<Article> {
-    return this.articleService.update(+id, updateArticleDto);
+    return this.articleService.update(id, updateArticleDto);
   }
 }

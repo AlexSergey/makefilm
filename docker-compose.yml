@@ -23,5 +23,17 @@ services:
       POSTGRES_PASSWORD: poll_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  makefilm_db_tests_local:
+    image: postgres:13
+    container_name: makefilm_db_tests_local
+    environment:
+      POSTGRES_DB: poll_db
+      POSTGRES_USER: poll_user
+      POSTGRES_PASSWORD: poll_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
 volumes:
   postgres_data:

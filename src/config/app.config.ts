@@ -4,7 +4,7 @@ import { IsEnum, IsInt, IsOptional, IsString, IsUrl, Max, Min } from 'class-vali
 import validateConfig from '.././utils/validate-config';
 import { AppConfig } from './app-config.type';
 
-enum Environment {
+export enum Environment {
   Development = 'development',
   Production = 'production',
   Test = 'test',
