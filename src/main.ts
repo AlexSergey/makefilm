@@ -2,8 +2,8 @@ import { ClassSerializerInterceptor, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
-import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { config } from 'dotenv';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
@@ -15,6 +15,10 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { ErrorMetricsInterceptor } from './interceptors/error-metrics.interceptor';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { ResolvePromisesInterceptor } from './utils/serializer.interceptor';
+
+config({
+  override: false,
+});
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {

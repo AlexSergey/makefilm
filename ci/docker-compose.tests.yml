@@ -31,6 +31,8 @@ services:
       - makefilm_db_tests
     networks:
       - testnetwork
+    environment:
+      DATABASE_URL: "postgresql://poll_user:poll_password@makefilm_db_tests:5432/poll_db?schema=public"
 
 volumes:
   postgres_data:

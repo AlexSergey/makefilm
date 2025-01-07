@@ -15,7 +15,6 @@ import { ArticleModule } from './modules/article/article.module';
   controllers: [],
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env'],
       isGlobal: true,
       load: [appConfig, loggerConfig, databaseConfig],
     }),

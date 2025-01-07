@@ -2,6 +2,7 @@
 FROM node:22-alpine AS base
 WORKDIR /app
 COPY package*.json ./
+COPY .env ./
 RUN npm install
 
 # Lint
