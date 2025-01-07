@@ -1,11 +1,7 @@
-name: Makefilm
+name: Deployment pipeline for Master/Dev
 
 on:
   push:
-    branches:
-      - master
-      - dev
-  pull_request:
     branches:
       - master
       - dev

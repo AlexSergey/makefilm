@@ -1,4 +1,4 @@
-name: Makefilm
+name: Verification pipeline for each PR
 
 on:
   pull_request:
