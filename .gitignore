@@ -94,5 +94,6 @@ test-reports
 
 # Custom rules
 .clinic
+.vagrant
 
 # Database
