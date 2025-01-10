@@ -1,10 +1,3 @@
-import { ClassSerializerInterceptor, INestApplication, Type } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { Reflector } from '@nestjs/core';
-import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource, DataSourceOptions } from 'typeorm';
-
 import databaseConfig from '@api/common/database/config/database.config';
 import { TypeOrmConfigService } from '@api/common/database/typeorm-config.service';
 import loggerConfig from '@api/common/logger/config/logger.config';
@@ -14,6 +7,12 @@ import appConfig from '@api/config/app.config';
 import { HttpExceptionFilter } from '@api/filters/http-exception.filter';
 import { TransformInterceptor } from '@api/interceptors/transform.interceptor';
 import { ResolvePromisesInterceptor } from '@api/utils/serializer.interceptor';
+import { ClassSerializerInterceptor, INestApplication, Type } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { Reflector } from '@nestjs/core';
+import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const bootstrap = async <T>(TestabeModule: Type<T>): Promise<INestApplication> => {
   const module: TestingModule = await Test.createTestingModule({

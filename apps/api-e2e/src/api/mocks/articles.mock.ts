@@ -1,6 +1,5 @@
-import { DataSource, QueryRunner } from 'typeorm';
-
 import { ArticleEntity } from '@api/modules/article/entities/article.entity';
+import { DataSource, QueryRunner } from 'typeorm';
 
 export type Clean = () => Promise<void>;
 export type Data = ArticleEntity[];

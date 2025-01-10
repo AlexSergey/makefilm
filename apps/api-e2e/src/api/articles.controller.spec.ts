@@ -1,9 +1,9 @@
+import { ArticleModule } from '@api/modules/article/article.module';
+import { CreateArticleDto } from '@api/modules/article/dto';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';
 
-import { ArticleModule } from '@api/modules/article/article.module';
-import { CreateArticleDto } from '@api/modules/article/dto';
 import { bootstrap } from './mocks/app.init';
 import { Clean, createArticles, Data, getLastId } from './mocks/articles.mock';
 
