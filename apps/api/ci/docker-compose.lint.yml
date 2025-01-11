@@ -3,6 +3,6 @@ version: '3'
 services:
   lint:
     build:
-      context: ../
+      context: ../../../
       dockerfile: ./Dockerfile
       target: lint

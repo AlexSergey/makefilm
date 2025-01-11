@@ -44,9 +44,9 @@ export const bootstrap = async <T>(TestabeModule: Type<T>): Promise<INestApplica
   // Global pipes
   // Global interceptor
   app.useGlobalInterceptors(
-    new ResolvePromisesInterceptor(),
     // ResolvePromisesInterceptor is used to resolve promises in responses because class-transformer can't do it
     // https://github.com/typestack/class-transformer/issues/549
+    new ResolvePromisesInterceptor(),
     new ClassSerializerInterceptor(reflector),
     new TransformInterceptor(),
   );

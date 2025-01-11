@@ -5,9 +5,7 @@ services:
     image: makefilm/api
     container_name: makefilm-api
     build:
-      context: ../
+      context: ../../../
       dockerfile: ./Dockerfile
       target: prod
     restart: always
-    ports:
-      - 3005:3005
