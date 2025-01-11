@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  release:
+    image: makefilm/api
+    container_name: makefilm-api
+    build:
+      context: ../../../
+      dockerfile: ./apps/api/Dockerfile
+      target: prod
+    restart: always
