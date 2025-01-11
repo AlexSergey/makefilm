@@ -16,7 +16,7 @@ services:
 
   unit_tests:
     build:
-      context: ../../../
+      context: ../../
       dockerfile: ./Dockerfile
       target: unit_tests
     networks:
@@ -24,7 +24,7 @@ services:
 
   e2e_tests:
     build:
-      context: ../../../
+      context: ../../
       dockerfile: ./Dockerfile
       target: e2e_tests
     depends_on:
