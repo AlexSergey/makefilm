@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  lint:
+  unit_tests:
     build:
       context: ../
       dockerfile: ./Dockerfile
-      target: lint
+      target: unit_tests
