@@ -9,12 +9,22 @@
     "format:package": "sort-package-json",
     "lint": "nx run-many -t lint",
     "lint:commit": "commitlint -e",
+    "migration:create": "npm run typeorm -- migration:create ./apps/api/src/common/database/migrations/$npm_config_name",
+    "migration:generate": "npm run typeorm -- --dataSource=apps/api/src/common/database/data-source.ts migration:generate ./apps/api/src/common/database/migrations/$npm_config_name",
+    "migration:revert": "npm run typeorm -- --dataSource=apps/api/src/common/database/data-source.ts migration:revert",
+    "migration:run": "npm run typeorm -- --dataSource=apps/api/src/common/database/data-source.ts migration:run",
+    "migration:run:e2e": "npm run typeorm:e2e -- --dataSource=apps/api/src/common/database/data-source.ts migration:run",
+    "migration:run:e2e:ci": "npm run typeorm:e2e:ci -- --dataSource=apps/api/src/common/database/data-source.ts migration:run",
     "pre-commit": "lint-staged",
     "prepare": "husky",
     "start": "nx run-many -t serve",
     "test": "nx run-many -t test",
     "test:api": "nx run api:test",
-    "test:api:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" npx nx run-many -t e2e"
+    "test:api:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" npx nx run-many -t e2e",
+    "test:api:e2e:ci": "jest --config ./test/jest-e2e.json --verbose",
+    "typeorm": "ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js",
+    "typeorm:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js",
+    "typeorm:e2e:ci": "ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
