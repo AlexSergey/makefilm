@@ -14,14 +14,6 @@ services:
     networks:
       - testnetwork
 
-  unit_tests:
-    build:
-      context: ../../
-      dockerfile: ./apps/api-e2e/Dockerfile
-      target: unit_tests
-    networks:
-      - testnetwork
-
   e2e_tests:
     build:
       context: ../../../
@@ -31,8 +23,6 @@ services:
       - makefilm_db_tests
     networks:
       - testnetwork
-    environment:
-      DATABASE_URL: 'postgresql://poll_user:poll_password@makefilm_db_tests:5432/poll_db?schema=public'
 
 volumes:
   postgres_data:

@@ -12,7 +12,7 @@ RUN npm run build
 # Production
 FROM node:22-alpine AS prod
 WORKDIR /app
-COPY apps/api/.env ./
+COPY .env ./
 COPY package*.json ./
 RUN npm ci --prod --ignore-scripts
 COPY --from=build /app/dist/apps/api /app/dist

@@ -22,9 +22,10 @@
     "test": "nx run-many -t test",
     "test:api": "nx run api:test",
     "test:api:e2e": "env-cmd cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" npx nx run api-e2e:e2e",
+    "test:api:e2e:ci": "env-cmd cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@makefilm_db_tests:5432/poll_db?schema=public\" npx nx run api-e2e:e2e",
     "typeorm": "env-cmd ts-node --project ./tsconfig.typeorm.json ./node_modules/typeorm/cli.js",
     "typeorm:e2e": "env-cmd cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" ts-node --project tsconfig.typeorm.json ./node_modules/typeorm/cli.js",
-    "typeorm:e2e:ci": "env-cmd cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5432/poll_db?schema=public\" ts-node --project tsconfig.typeorm.json ./node_modules/typeorm/cli.js",
+    "typeorm:e2e:ci": "env-cmd cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@makefilm_db_tests:5432/poll_db?schema=public\" ts-node --project tsconfig.typeorm.json ./node_modules/typeorm/cli.js",
     "typeorm:links": "ts-node --pretty --project=tsconfig.typeorm.json tools/typeorm-links.ts"
   },
   "dependencies": {
