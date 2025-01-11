@@ -5,7 +5,7 @@ services:
     image: makefilm/api
     container_name: makefilm-api
     build:
-      context: ../../
-      dockerfile: ./Dockerfile
+      context: ../../../
+      dockerfile: ./apps/api/Dockerfile
       target: prod
     restart: always

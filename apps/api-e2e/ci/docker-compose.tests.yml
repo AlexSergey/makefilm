@@ -17,15 +17,15 @@ services:
   unit_tests:
     build:
       context: ../../
-      dockerfile: ./Dockerfile
+      dockerfile: ./apps/api-e2e/Dockerfile
       target: unit_tests
     networks:
       - testnetwork
 
   e2e_tests:
     build:
-      context: ../../
-      dockerfile: ./Dockerfile
+      context: ../../../
+      dockerfile: ./apps/api-e2e/Dockerfile
       target: e2e_tests
     depends_on:
       - makefilm_db_tests

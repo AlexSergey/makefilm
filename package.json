@@ -13,7 +13,8 @@
     "prepare": "husky",
     "start": "nx run-many -t serve",
     "test": "nx run-many -t test",
-    "test:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" npx nx run-many -t e2e"
+    "test:api": "nx run api:test",
+    "test:api:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" npx nx run-many -t e2e"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
