@@ -13,9 +13,11 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@api/*": ["./apps/api/src/*"]
+      "@api/*": ["./apps/api/src/*"],
+      "@makefilm/contracts": ["packages/contracts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

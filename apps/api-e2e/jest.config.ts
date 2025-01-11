@@ -7,6 +7,7 @@ export default {
   preset: '../../jest.preset.js',
   setupFiles: ['<rootDir>/src/support/test-setup.ts'],
   testEnvironment: 'node',
+  testMatch: ['<rootDir>/src/api/?(*.)+(e2e-spec).[jt]s?(x)'],
   transform: {
     '^.+\\.[tj]s$': [
       'ts-jest',

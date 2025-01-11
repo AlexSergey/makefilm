@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 import { AllConfigType } from '../../config/config.type';
+import * as entities from '../database/entities';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -17,7 +18,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       },
       database: this.configService.get('database.name', { infer: true }),
       dropSchema: false,
-      entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
+      entities: Object.values(entities),
       extra: {
         // based on https://node-postgres.com/apis/pool
         // max connection pool size

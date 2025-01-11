@@ -1,12 +1,19 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import {
+  CreateArticleDto,
+  CreateArticleResponseDto,
+  GetArticleResponseDto,
+  GetArticlesResponseDto,
+  UpdateArticleDto,
+} from '@makefilm/contracts';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Filter, FilterParams } from '../../common/database/decorators/filter.decorator';
 import { Pagination, PaginationParams } from '../../common/database/decorators/pagination.decorator';
 import { SearchParams } from '../../common/database/decorators/search.decorator';
 import { Sorting, SortParams } from '../../common/database/decorators/sort.decorator';
+import { ResponseValidationInterceptor } from '../../interceptors/response-validator.interceptor';
 import { ArticleService } from '../../modules/article/article.service';
-import { CreateArticleDto, UpdateArticleDto } from '../../modules/article/dto';
 import { Article } from '../../modules/article/values/article.value';
 
 @ApiTags('articles')
@@ -19,6 +26,7 @@ export class ArticleController {
   @ApiResponse({ description: 'The article has been successfully created', status: HttpStatus.CREATED })
   @ApiResponse({ description: 'Error creating article', status: HttpStatus.BAD_REQUEST })
   @Post()
+  @UseInterceptors(new ResponseValidationInterceptor(CreateArticleResponseDto))
   create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
     return this.articleService.create(createArticleDto);
   }
@@ -41,6 +49,7 @@ export class ArticleController {
   @ApiResponse({ description: 'List of articles', status: HttpStatus.OK, type: [Article] })
   @ApiResponse({ description: 'Error while getting articles', status: HttpStatus.BAD_REQUEST })
   @Get()
+  @UseInterceptors(new ResponseValidationInterceptor(GetArticlesResponseDto))
   findAll(
     @PaginationParams() pagination: Pagination,
     @SortParams() sort: Sorting,
@@ -58,6 +67,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Article found', status: HttpStatus.OK, type: Article })
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Get(':id')
+  @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
   findOne(@Param('id') id: string): Promise<Article> {
     return this.articleService.findOne(id);
   }
@@ -78,6 +88,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Error updating article', status: HttpStatus.BAD_REQUEST })
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Patch(':id')
+  @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto): Promise<Article> {
     return this.articleService.update(id, updateArticleDto);
   }

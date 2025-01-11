@@ -1,3 +1,4 @@
+import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,7 +7,6 @@ import { Filter } from '../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../common/database/decorators/sort.decorator';
 import { dataQuery } from '../../common/database/utils/data-query.util';
-import { CreateArticleDto, UpdateArticleDto } from './dto';
 import { ArticleEntity } from './entities/article.entity';
 import { Article } from './values/article.value';
 
@@ -33,14 +33,18 @@ export class ArticleService {
     articles: Article[];
     total: number;
   }> {
-    const q = dataQuery(['title'], params);
+    try {
+      const q = dataQuery(['title'], params);
 
-    const [articles, total] = await this.articleRepository.findAndCount(q);
+      const [articles, total] = await this.articleRepository.findAndCount(q);
 
-    return {
-      articles: articles.map((article) => new Article(article)),
-      total,
-    };
+      return {
+        articles: articles.map((article) => new Article(article)),
+        total,
+      };
+    } catch {
+      throw new NotFoundException('Articles not found');
+    }
   }
 
   async findOne(id: string): Promise<Article> {
