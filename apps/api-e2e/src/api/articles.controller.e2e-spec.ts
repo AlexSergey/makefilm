@@ -1,5 +1,5 @@
 import { ArticleModule } from '@api/modules/article/article.module';
-import { CreateArticleDto } from '@api/modules/article/dto';
+import { CreateArticleDto } from '@makefilm/contracts';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';

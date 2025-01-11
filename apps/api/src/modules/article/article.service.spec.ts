@@ -1,10 +1,10 @@
 import { createMock } from '@golevelup/ts-jest';
+import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ArticleService } from './article.service';
-import { CreateArticleDto, UpdateArticleDto } from './dto';
 import { ArticleEntity } from './entities/article.entity';
 
 describe('ArticleService', () => {

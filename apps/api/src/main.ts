@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, VersioningType } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
@@ -46,6 +46,7 @@ async function bootstrap(): Promise<void> {
   // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
   // Global pipes
+  app.useGlobalPipes(new ValidationPipe());
   // Global interceptor
   app.useGlobalInterceptors(
     new ErrorMetricsInterceptor(metricsService, configService),

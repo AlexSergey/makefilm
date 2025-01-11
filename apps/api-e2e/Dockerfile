@@ -11,4 +11,4 @@ COPY . .
 RUN npm run build
 COPY ./ci/wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
-ENTRYPOINT ["/wait-for-it.sh", "makefilm_db_tests:5432", "--", "sh", "-c", "npm run migration:run:e2e:ci || echo 'Migration failed!' && npm run test:api:e2e:ci || echo 'Test failed!'"]
+ENTRYPOINT ["/wait-for-it.sh", "makefilm_db_tests:5432", "--", "sh", "-c", "npm run migration:run:e2e:ci && npm run test:api:e2e:ci"]
