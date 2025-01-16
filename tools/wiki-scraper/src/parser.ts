@@ -1,6 +1,6 @@
 import fg from 'fast-glob';
 import { existsSync, readFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { extname, join, relative } from 'node:path';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Actor, ActorFinal, Actors, getParsedActors } from './parsers/actors.parser';
@@ -72,7 +72,7 @@ export class Parser {
     const name = getPosterName(thumbnail, 'https://upload.wikimedia.org/');
     const postersFolder = compilePostersFolderPath(this.__root, [posters]);
     createFolder(postersFolder);
-    const posterPath = join(postersFolder, `${id}---${name}`);
+    const posterPath = join(postersFolder, `${id}${extname(name)}`);
 
     if (!existsSync(posterPath)) {
       const state = await download(thumbnail, posterPath);
@@ -201,6 +201,8 @@ export class Parser {
     // eslint-disable-next-line no-warning-comments
     // TODO:
     // Parse photo directors and actors here
+    // Example api call:
+    // https://en.wikipedia.org/api/rest_v1/page/summary/Jim_Abrahams
 
     for (let i = 0, l = this.__validData.length; i < l; i++) {
       const movie = this.__validData[i];
@@ -252,12 +254,14 @@ export class Parser {
       }
 
       const modifiedMovie: ModifiedMovie = {
+        actors: acts.slice(0, 5),
+        description: movie.extract,
+        directors: dirs.slice(0, 5),
+        genres: genres.slice(0, 5),
         id,
-        ...movie,
-        cast: acts,
-        directors: dirs,
-        genres,
         thumbnail: posterPath,
+        title: movie.title,
+        year: movie.year,
       };
 
       modifiedMovies.push(modifiedMovie);

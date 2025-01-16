@@ -1,0 +1,181 @@
+[
+  {
+    "actors": [
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "768e27ad-a79f-457d-9ce3-1dcef3f38852",
+        "name": "Andrea Riseborough",
+        "type": ["actor"]
+      },
+      {
+        "id": "42c19cad-dd46-43ac-99c3-3e4e4e285ca8",
+        "name": "Demián Bichir",
+        "type": ["actor"]
+      },
+      {
+        "id": "a22f6022-c21d-4927-b32a-d3f9a3acdef8",
+        "name": "John Cho",
+        "type": ["actor"]
+      },
+      {
+        "id": "7469f298-16a8-4022-a70f-61878f3d760e",
+        "name": "Betty Gilpin",
+        "type": ["actor"]
+      }
+    ],
+    "description": "The Grudge is a 2020 American psychological supernatural horror film written and directed by Nicolas Pesce. Originally announced as a reboot of the 2004 American remake and the original 2002 Japanese horror film Ju-On: The Grudge, the film ended up taking place before and during the events of the 2004 film and its two direct sequels, and is the fourth installment in the American The Grudge film series. The film stars Andrea Riseborough, Demián Bichir, John Cho, Betty Gilpin, Lin Shaye, and Jacki Weaver, and follows a police officer who investigates several murders that are seemingly connected to a single house.",
+    "directors": [
+      {
+        "id": "be208757-b952-41c0-9920-0d66555056d8",
+        "name": "Nicolas Pesce",
+        "type": ["director"]
+      },
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "dceaed5e-a91f-48f9-a40c-9f5a6c77aee8",
+        "name": "Miguel Arteta",
+        "type": ["director"]
+      }
+    ],
+    "genres": [
+      {
+        "id": "3f949396-a9f5-4eb5-9efd-1d891ae82a30",
+        "name": "Horror"
+      },
+      {
+        "id": "482648ed-2f0e-40d2-b062-b49d11e6b03c",
+        "name": "Supernatural"
+      }
+    ],
+    "id": "b708d314-4527-4ca7-97ed-ab3aab2d9020",
+    "thumbnail": "posters/b708d314-4527-4ca7-97ed-ab3aab2d9020.jpeg",
+    "title": "The Grudge",
+    "year": 2020
+  },
+  {
+    "actors": [
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "768e27ad-a79f-457d-9ce3-1dcef3f38852",
+        "name": "Andrea Riseborough",
+        "type": ["actor"]
+      },
+      {
+        "id": "42c19cad-dd46-43ac-99c3-3e4e4e285ca8",
+        "name": "Demián Bichir",
+        "type": ["actor"]
+      },
+      {
+        "id": "a22f6022-c21d-4927-b32a-d3f9a3acdef8",
+        "name": "John Cho",
+        "type": ["actor"]
+      },
+      {
+        "id": "7469f298-16a8-4022-a70f-61878f3d760e",
+        "name": "Betty Gilpin",
+        "type": ["actor"]
+      }
+    ],
+    "description": "Underwater is a 2020 American science fiction action horror film directed by William Eubank. The film stars Kristen Stewart, Vincent Cassel, Jessica Henwick, John Gallagher Jr., Mamoudou Athie, and T.J. Miller.",
+    "directors": [
+      {
+        "id": "be208757-b952-41c0-9920-0d66555056d8",
+        "name": "Nicolas Pesce",
+        "type": ["director"]
+      },
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "dceaed5e-a91f-48f9-a40c-9f5a6c77aee8",
+        "name": "Miguel Arteta",
+        "type": ["director"]
+      }
+    ],
+    "genres": [
+      {
+        "id": "ec9f738c-e57c-4b8d-a475-ccf42753655d",
+        "name": "Action"
+      },
+      {
+        "id": "889e339f-7d61-4ec8-8cf9-db30d1151422",
+        "name": "Science Fiction"
+      }
+    ],
+    "id": "defa7e70-753c-4b3f-9d13-90c2f97899bc",
+    "thumbnail": "posters/defa7e70-753c-4b3f-9d13-90c2f97899bc.jpeg",
+    "title": "Underwater",
+    "year": 2020
+  },
+  {
+    "actors": [
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "768e27ad-a79f-457d-9ce3-1dcef3f38852",
+        "name": "Andrea Riseborough",
+        "type": ["actor"]
+      },
+      {
+        "id": "42c19cad-dd46-43ac-99c3-3e4e4e285ca8",
+        "name": "Demián Bichir",
+        "type": ["actor"]
+      },
+      {
+        "id": "a22f6022-c21d-4927-b32a-d3f9a3acdef8",
+        "name": "John Cho",
+        "type": ["actor"]
+      },
+      {
+        "id": "7469f298-16a8-4022-a70f-61878f3d760e",
+        "name": "Betty Gilpin",
+        "type": ["actor"]
+      }
+    ],
+    "description": "Like a Boss is a 2020 American comedy film directed by Miguel Arteta, written by Sam Pitman and Adam Cole-Kelly, and starring Tiffany Haddish, Rose Byrne, and Salma Hayek. The plot follows two friends who attempt to take back control of their cosmetics company from an industry titan.",
+    "directors": [
+      {
+        "id": "be208757-b952-41c0-9920-0d66555056d8",
+        "name": "Nicolas Pesce",
+        "type": ["director"]
+      },
+      {
+        "id": "73273635-2a3b-4216-8d3b-f9a40d5506a4",
+        "name": "William Eubank",
+        "type": ["director", "actor"]
+      },
+      {
+        "id": "dceaed5e-a91f-48f9-a40c-9f5a6c77aee8",
+        "name": "Miguel Arteta",
+        "type": ["director"]
+      }
+    ],
+    "genres": [
+      {
+        "id": "da7d7266-f02a-426a-ad44-12fe358058a1",
+        "name": "Comedy"
+      }
+    ],
+    "id": "be525606-2a45-4ba9-abbe-ee6684027f86",
+    "thumbnail": "posters/be525606-2a45-4ba9-abbe-ee6684027f86.jpg",
+    "title": "Like a Boss",
+    "year": 2020
+  }
+]

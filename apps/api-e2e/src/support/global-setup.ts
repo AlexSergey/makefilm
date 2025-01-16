@@ -1,3 +1,4 @@
+import 'multer';
 /* eslint-disable */
 var __TEARDOWN_MESSAGE__: string;
 

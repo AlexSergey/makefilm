@@ -1,0 +1,31 @@
+### GET request to example server
+GET http://localhost:3005/api/movies/
+###
+### GET request to example server
+GET http://localhost:3005/api/movies/actors
+
+###
+### GET request to example server
+GET http://localhost:3005/api/movies/directors
+
+###
+
+### GET request to example server
+GET http://localhost:3005/api/movies/genres/actors
+
+###
+
+
+### GET request to example server
+GET http://localhost:3005/api/movies/genres/directors
+
+###
+### GET request to example server
+GET http://localhost:3005/api/movies/genres
+
+###
+### GET request to example server
+GET http://localhost:3005/api/movies/be525606-2a45-4ba9-abbe-ee6684027f86
+
+###
+

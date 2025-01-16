@@ -8,13 +8,13 @@ import {
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { Filter, FilterParams } from '../../common/database/decorators/filter.decorator';
-import { Pagination, PaginationParams } from '../../common/database/decorators/pagination.decorator';
-import { SearchParams } from '../../common/database/decorators/search.decorator';
-import { Sorting, SortParams } from '../../common/database/decorators/sort.decorator';
-import { ResponseValidationInterceptor } from '../../interceptors/response-validator.interceptor';
-import { ArticleService } from '../../modules/article/article.service';
-import { Article } from '../../modules/article/values/article.value';
+import { Filter, FilterParams } from '../common/database/decorators/filter.decorator';
+import { Pagination, PaginationParams } from '../common/database/decorators/pagination.decorator';
+import { SearchParams } from '../common/database/decorators/search.decorator';
+import { Sorting, SortParams } from '../common/database/decorators/sort.decorator';
+import { ResponseValidationInterceptor } from '../interceptors/response-validator.interceptor';
+import { ArticleService } from '../modules/article/article.service';
+import { Article } from '../modules/article/values/article.value';
 
 @ApiTags('articles')
 @Controller('articles')
