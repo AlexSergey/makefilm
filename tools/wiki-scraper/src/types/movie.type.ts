@@ -8,15 +8,12 @@ export enum Actions {
 }
 
 export interface ModifiedMovie {
-  cast: Actor[];
+  actors: Actor[];
+  description: string;
   directors: Director[];
-  extract: string;
   genres: Genre[];
-  href: string;
   id: string;
   thumbnail: string;
-  thumbnail_height: number;
-  thumbnail_width: number;
   title: string;
   year: number;
 }

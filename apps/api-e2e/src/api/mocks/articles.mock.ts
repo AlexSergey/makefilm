@@ -29,15 +29,9 @@ export const createArticles = async (dataSource: DataSource, arts: Article[]): P
 
   return {
     clean: async (): Promise<void> => {
-      const queryRunner = dataSource.createQueryRunner();
-      await queryRunner.connect();
-      const arts = await queryRunner.manager.find(ArticleEntity);
-
-      for (const a of arts) {
-        await queryRunner.manager.delete(ArticleEntity, a.id);
-      }
-
-      await queryRunner.release();
+      await dataSource.manager.query(
+        `TRUNCATE TABLE "${dataSource.getRepository(ArticleEntity).metadata.tableName}" CASCADE`,
+      );
     },
     data: articles,
     queryRunner,

@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 @Entity('articles')
 export class ArticleEntity {
-  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP(6)', type: 'timestamp' })
+  @CreateDateColumn({ default: () => 'NOW()', type: 'timestamp' })
   createdAt: Date;
 
   @Column()
@@ -14,6 +14,6 @@ export class ArticleEntity {
   @Column()
   title: string;
 
-  @UpdateDateColumn({ default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)', type: 'timestamp' })
+  @UpdateDateColumn({ default: () => 'NOW()', onUpdate: 'NOW()', type: 'timestamp' })
   updatedAt: Date;
 }

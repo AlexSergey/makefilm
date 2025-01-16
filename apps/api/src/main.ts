@@ -5,6 +5,7 @@ import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { config } from 'dotenv';
 import helmet from 'helmet';
+import 'multer';
 
 import { AppModule } from './app.module';
 import { LoggerService } from './common/logger/logger.service';

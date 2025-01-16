@@ -1,6 +1,6 @@
 const baseConfig = require('../../eslint.config.cjs');
 
-const ignores = ['src/data/*.json', 'src/data2/*.json'];
+const ignores = ['src/data/*.json', 'src/data2/*.json', 'parsed/*.json'];
 
 module.exports = [
   ...baseConfig,

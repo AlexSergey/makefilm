@@ -189,4 +189,9 @@ module.exports = [
   regexpPlugin.configs['flat/recommended'],
   json.configs['recommended'],
   customTypescriptConfig,
+  {
+    rules: {
+      'perfectionist/sort-decorators': 'off',
+    },
+  },
 ];

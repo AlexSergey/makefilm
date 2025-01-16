@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';
 
-import { bootstrap } from './mocks/app.init';
+import { bootstrap } from './app/app.init';
 import { Clean, createArticles, Data, getLastId } from './mocks/articles.mock';
 
 describe('ArticleController (e2e)', () => {

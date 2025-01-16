@@ -16,9 +16,4 @@ module.exports = [
       ],
     },
   },
-  {
-    rules: {
-      'perfectionist/sort-decorators': 'off',
-    },
-  },
 ];

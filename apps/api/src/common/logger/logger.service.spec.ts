@@ -8,7 +8,7 @@ import { LoggerService } from './logger.service';
 class MockConfigService {
   getOrThrow(key: string): string {
     if (key === 'logger.logLevel') {
-      return 'development'; // Можно изменить на 'production' для другого теста
+      return 'development';
     }
 
     return null;
@@ -17,7 +17,7 @@ class MockConfigService {
 
 class MockCorrelationIdService {
   getCorrelationId(): string {
-    return 'mock-correlation-id'; // Мокаем корреляционный ID
+    return 'mock-correlation-id';
   }
 }
 
@@ -32,7 +32,7 @@ describe('LoggerService', () => {
         LoggerService,
         { provide: ConfigService, useClass: MockConfigService },
         { provide: CorrelationIdService, useClass: MockCorrelationIdService },
-        { provide: INQUIRER, useValue: {} }, // Мокаем родительский класс
+        { provide: INQUIRER, useValue: {} },
       ],
     }).compile();
 
@@ -55,7 +55,7 @@ describe('LoggerService', () => {
   });
 
   it('should not add CorrelationID message if no correlationId is present', () => {
-    jest.spyOn(correlationIdService, 'getCorrelationId').mockReturnValue(null); // Мокаем отсутствие ID
+    jest.spyOn(correlationIdService, 'getCorrelationId').mockReturnValue(null);
     const formattedMessage = service.formatMessage('log', 'Test message', 'pid123', 'log', 'TestContext', '50ms');
     expect(formattedMessage).not.toContain('[CorrelationID: ');
   });
