@@ -1,10 +1,9 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
 import databaseConfig from '../../common/database/config/database.config';
-import { TypeOrmConfigService } from '../../common/database/typeorm-config.service';
 import loggerConfig from '../../common/logger/config/logger.config';
 import appConfig from '../../config/app.config';
 import { Actor } from './entities/actor.entity';
@@ -53,12 +52,6 @@ describe('MovieService', () => {
           isGlobal: true,
           load: [appConfig, loggerConfig, databaseConfig],
         }),
-        TypeOrmModule.forRootAsync({
-          dataSourceFactory: async (options: DataSourceOptions) => {
-            return new DataSource(options).initialize();
-          },
-          useClass: TypeOrmConfigService,
-        }),
       ],
       providers: [
         MovieService,
@@ -78,6 +71,7 @@ describe('MovieService', () => {
           provide: getRepositoryToken(Genre),
           useValue: genresMockRepo,
         },
+        { provide: DataSource, useFactory: jest.fn() },
       ],
     }).compile();
 
