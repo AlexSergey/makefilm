@@ -1,4 +1,5 @@
 export default {
+  bail: true,
   coverageDirectory: '../../coverage/apps/web',
   displayName: 'web',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],

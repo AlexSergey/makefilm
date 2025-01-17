@@ -1,4 +1,5 @@
 export default {
+  bail: true,
   coverageDirectory: '../../coverage/api-e2e',
   displayName: 'api-e2e',
   globalSetup: '<rootDir>/src/support/global-setup.ts',
