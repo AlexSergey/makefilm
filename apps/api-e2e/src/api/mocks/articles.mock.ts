@@ -1,13 +1,9 @@
 import { Article } from '@api/modules/article/entities/article';
+import { CreateArticleDto } from '@makefilm/contracts';
 import { DataSource, QueryRunner } from 'typeorm';
 
 export type Clean = () => Promise<void>;
 export type Data = Article[];
-
-interface Article {
-  description: string;
-  title: string;
-}
 
 interface CreateArticles {
   clean: Clean;
@@ -15,7 +11,7 @@ interface CreateArticles {
   queryRunner: QueryRunner;
 }
 
-export const createArticles = async (dataSource: DataSource, arts: Article[]): Promise<CreateArticles> => {
+export const createArticles = async (dataSource: DataSource, arts: CreateArticleDto[]): Promise<CreateArticles> => {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
   const articles: Article[] = [];
