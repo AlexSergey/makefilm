@@ -14,7 +14,7 @@ import { SearchParams } from '../common/database/decorators/search.decorator';
 import { Sorting, SortParams } from '../common/database/decorators/sort.decorator';
 import { ResponseValidationInterceptor } from '../interceptors/response-validator.interceptor';
 import { ArticleService } from '../modules/article/article.service';
-import { Article } from '../modules/article/values/article.value';
+import { ArticleValue } from '../modules/article/values/article.value';
 
 @ApiTags('articles')
 @Controller('articles')
@@ -27,7 +27,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Error creating article', status: HttpStatus.BAD_REQUEST })
   @Post()
   @UseInterceptors(new ResponseValidationInterceptor(CreateArticleResponseDto))
-  create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
+  create(@Body() createArticleDto: CreateArticleDto): Promise<ArticleValue> {
     return this.articleService.create(createArticleDto);
   }
 
@@ -46,7 +46,7 @@ export class ArticleController {
     type: Number,
   })
   @ApiQuery({ description: 'Filtering by fields', name: 'where', required: false, type: String })
-  @ApiResponse({ description: 'List of articles', status: HttpStatus.OK, type: [Article] })
+  @ApiResponse({ description: 'List of articles', status: HttpStatus.OK, type: [ArticleValue] })
   @ApiResponse({ description: 'Error while getting articles', status: HttpStatus.BAD_REQUEST })
   @Get()
   @UseInterceptors(new ResponseValidationInterceptor(GetArticlesResponseDto))
@@ -56,7 +56,7 @@ export class ArticleController {
     @SearchParams() search: null | string,
     @FilterParams() filter: Filter,
   ): Promise<{
-    articles: Article[];
+    articles: ArticleValue[];
     total: number;
   }> {
     return this.articleService.findAll({ filter, pagination, search, sort });
@@ -64,11 +64,11 @@ export class ArticleController {
 
   @ApiOperation({ summary: 'Get article by ID' })
   @ApiParam({ description: 'Article ID', name: 'id', type: String })
-  @ApiResponse({ description: 'Article found', status: HttpStatus.OK, type: Article })
+  @ApiResponse({ description: 'Article found', status: HttpStatus.OK, type: ArticleValue })
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Get(':id')
   @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
-  findOne(@Param('id') id: string): Promise<Article> {
+  findOne(@Param('id') id: string): Promise<ArticleValue> {
     return this.articleService.findOne(id);
   }
 
@@ -89,7 +89,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Patch(':id')
   @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto): Promise<Article> {
+  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto): Promise<ArticleValue> {
     return this.articleService.update(id, updateArticleDto);
   }
 }

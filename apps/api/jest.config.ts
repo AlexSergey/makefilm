@@ -1,4 +1,5 @@
 export default {
+  bail: true,
   coverageDirectory: '../../coverage/apps/api',
   displayName: 'api',
   moduleFileExtensions: ['ts', 'js', 'html'],
