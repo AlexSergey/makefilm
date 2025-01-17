@@ -1,45 +1,40 @@
 import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { Filter } from '../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../common/database/decorators/sort.decorator';
-import { dataQuery } from '../../common/database/utils/data-query.util';
-import { ArticleEntity } from './entities/article.entity';
-import { Article } from './values/article.value';
+import { Article } from './entities/article';
+import { ArticleRepository } from './repositories/article.repository';
+import { ArticleValue } from './values/article.value';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectRepository(ArticleEntity) private articleRepository: Repository<ArticleEntity>) {}
+  constructor(private readonly articleRepository: ArticleRepository) {}
 
-  convertEntityToValue(articleEntity: ArticleEntity): Article {
-    return new Article({
+  convertEntityToValue(articleEntity: Article): ArticleValue {
+    return new ArticleValue({
       description: articleEntity.description,
       id: articleEntity.id,
       title: articleEntity.title,
     });
   }
 
-  async create(data: CreateArticleDto): Promise<Article> {
-    const article = this.articleRepository.create(data);
-    const articleEntity = await this.articleRepository.save(article);
+  async create(data: CreateArticleDto): Promise<ArticleValue> {
+    const article = await this.articleRepository.createArticle(data);
 
-    return this.convertEntityToValue(articleEntity);
+    return this.convertEntityToValue(article);
   }
 
   async findAll(params: { filter?: Filter; pagination?: Pagination; search?: string; sort?: Sorting }): Promise<{
-    articles: Article[];
+    articles: ArticleValue[];
     total: number;
   }> {
     try {
-      const q = dataQuery(['title'], params);
-
-      const [articles, total] = await this.articleRepository.findAndCount(q);
+      const [articles, total] = await this.articleRepository.findAllArticles(params);
 
       return {
-        articles: articles.map((article) => new Article(article)),
+        articles: articles.map((article) => new ArticleValue(article)),
         total,
       };
     } catch {
@@ -47,7 +42,7 @@ export class ArticleService {
     }
   }
 
-  async findOne(id: string): Promise<Article> {
+  async findOne(id: string): Promise<ArticleValue> {
     try {
       const articleEntity = await this.articleRepository.findOne({
         where: { id },
@@ -61,23 +56,17 @@ export class ArticleService {
 
   async remove(id: string): Promise<void> {
     try {
-      await this.articleRepository.delete({ id });
+      await this.articleRepository.deleteArticle(id);
     } catch {
       throw new NotFoundException('Article not found');
     }
   }
 
-  async update(id: string, data: UpdateArticleDto): Promise<Article> {
+  async update(id: string, data: UpdateArticleDto): Promise<ArticleValue> {
     try {
-      const articleEntity = await this.articleRepository.findOne({
-        where: { id },
-      });
-      const articleUpdatedEntity = await this.articleRepository.save({
-        ...{ description: articleEntity.description, id: articleEntity.id, title: articleEntity.title },
-        ...data,
-      });
+      const article = await this.articleRepository.updateArticle(id, data);
 
-      return this.convertEntityToValue(articleUpdatedEntity);
+      return this.convertEntityToValue(article);
     } catch {
       throw new NotFoundException('Article not found');
     }

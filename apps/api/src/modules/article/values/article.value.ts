@@ -4,7 +4,7 @@ interface ArticlePropsInterface {
   title: string;
 }
 
-export class Article {
+export class ArticleValue {
   public readonly description: string;
   public readonly id: string;
   public readonly title: string;

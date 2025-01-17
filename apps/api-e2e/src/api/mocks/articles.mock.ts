@@ -1,8 +1,8 @@
-import { ArticleEntity } from '@api/modules/article/entities/article.entity';
+import { Article } from '@api/modules/article/entities/article';
 import { DataSource, QueryRunner } from 'typeorm';
 
 export type Clean = () => Promise<void>;
-export type Data = ArticleEntity[];
+export type Data = Article[];
 
 interface Article {
   description: string;
@@ -18,11 +18,11 @@ interface CreateArticles {
 export const createArticles = async (dataSource: DataSource, arts: Article[]): Promise<CreateArticles> => {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
-  const articles: ArticleEntity[] = [];
+  const articles: Article[] = [];
 
   for (const article of arts) {
-    const art = queryRunner.manager.create(ArticleEntity, article);
-    await queryRunner.manager.save(ArticleEntity, art);
+    const art = queryRunner.manager.create(Article, article);
+    await queryRunner.manager.save(Article, art);
     articles.push(art);
   }
   await queryRunner.release();
@@ -30,7 +30,7 @@ export const createArticles = async (dataSource: DataSource, arts: Article[]): P
   return {
     clean: async (): Promise<void> => {
       await dataSource.manager.query(
-        `TRUNCATE TABLE "${dataSource.getRepository(ArticleEntity).metadata.tableName}" CASCADE`,
+        `TRUNCATE TABLE "${dataSource.getRepository(Article).metadata.tableName}" CASCADE`,
       );
     },
     data: articles,
@@ -41,9 +41,9 @@ export const createArticles = async (dataSource: DataSource, arts: Article[]): P
 export const getLastId = async (dataSource: DataSource): Promise<string> => {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
-  const articles = await queryRunner.manager.find(ArticleEntity);
+  const articles = await queryRunner.manager.find(Article);
   const id = articles[articles.length - 1].id;
-  await queryRunner.manager.delete(ArticleEntity, id);
+  await queryRunner.manager.delete(Article, id);
   await queryRunner.release();
 
   return id;
