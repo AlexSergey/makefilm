@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Genre } from '../entities/genre.entity';
+import { Genre } from '../entities/genres.entity';
 
 @Injectable()
-export class GenreRepository extends Repository<Genre> {
+export class GenresRepository extends Repository<Genre> {
   constructor(
     @InjectRepository(Genre)
     private readonly genreRepository: Repository<Genre>,

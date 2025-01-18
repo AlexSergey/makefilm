@@ -3,13 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 
 import { FillDatabaseDto } from '../dtos/fill-database.dto';
-import { Actor } from '../entities/actor.entity';
-import { Director } from '../entities/director.entity';
-import { Genre } from '../entities/genre.entity';
-import { Movie } from '../entities/movie.entity';
+import { Actor } from '../entities/actors.entity';
+import { Director } from '../entities/directors.entity';
+import { Genre } from '../entities/genres.entity';
+import { Movie } from '../entities/movies.entity';
 
 @Injectable()
-export class MovieRepository extends Repository<Movie> {
+export class MoviesRepository extends Repository<Movie> {
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,

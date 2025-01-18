@@ -1,8 +1,8 @@
 import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { ArticleService } from './article.service';
-import { ArticleRepository } from './repositories/article.repository';
+import { ArticlesService } from './articles.service';
+import { ArticlesRepository } from './repositories/articles.repository';
 
 describe('ArticleService', () => {
   const mockArticle = {
@@ -12,13 +12,13 @@ describe('ArticleService', () => {
     title: 'Test Title',
     updatedAt: new Date(),
   };
-  let service: ArticleService;
+  let service: ArticlesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
-          provide: ArticleRepository,
+          provide: ArticlesRepository,
           useValue: {
             createArticle: jest.fn().mockResolvedValue(mockArticle),
             deleteArticle: jest.fn().mockResolvedValue(undefined),
@@ -27,11 +27,11 @@ describe('ArticleService', () => {
             updateArticle: (id, data) => ({ ...mockArticle, ...data }),
           },
         },
-        ArticleService,
+        ArticlesService,
       ],
     }).compile();
 
-    service = module.get<ArticleService>(ArticleService);
+    service = module.get<ArticlesService>(ArticlesService);
   });
 
   it('should be defined', () => {

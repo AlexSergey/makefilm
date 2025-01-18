@@ -4,15 +4,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Filter } from '../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../common/database/decorators/sort.decorator';
-import { Article } from './entities/article';
-import { ArticleRepository } from './repositories/article.repository';
+import { ArticlesEntity } from './entities/articles.entity';
+import { ArticlesRepository } from './repositories/articles.repository';
 import { ArticleValue } from './values/article.value';
 
 @Injectable()
-export class ArticleService {
-  constructor(private readonly articleRepository: ArticleRepository) {}
+export class ArticlesService {
+  constructor(private readonly articleRepository: ArticlesRepository) {}
 
-  convertEntityToValue(articleEntity: Article): ArticleValue {
+  convertEntityToValue(articleEntity: ArticlesEntity): ArticleValue {
     return new ArticleValue({
       description: articleEntity.description,
       id: articleEntity.id,

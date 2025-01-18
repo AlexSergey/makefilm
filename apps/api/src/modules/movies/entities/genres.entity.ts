@@ -1,9 +1,9 @@
 import { IsString, IsUUID } from 'class-validator';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Movie } from './movie.entity';
+import { Movie } from './movies.entity';
 
-@Entity()
+@Entity('genres')
 export class Genre {
   @IsUUID()
   @PrimaryGeneratedColumn('uuid')

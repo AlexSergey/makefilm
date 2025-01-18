@@ -7,18 +7,18 @@ import { Filter } from '../../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../../common/database/decorators/sort.decorator';
 import { dataQuery } from '../../../common/database/utils/data-query.util';
-import { Article } from '../entities/article';
+import { ArticlesEntity } from '../entities/articles.entity';
 
 @Injectable()
-export class ArticleRepository extends Repository<Article> {
+export class ArticlesRepository extends Repository<ArticlesEntity> {
   constructor(
-    @InjectRepository(Article)
-    private readonly articleRepository: Repository<Article>,
+    @InjectRepository(ArticlesEntity)
+    private readonly articleRepository: Repository<ArticlesEntity>,
   ) {
     super(articleRepository.target, articleRepository.manager, articleRepository.queryRunner);
   }
 
-  async createArticle(data: CreateArticleDto): Promise<Article> {
+  async createArticle(data: CreateArticleDto): Promise<ArticlesEntity> {
     const article = this.articleRepository.create(data);
 
     return await this.articleRepository.save(article);
@@ -33,13 +33,13 @@ export class ArticleRepository extends Repository<Article> {
     pagination?: Pagination;
     search?: string;
     sort?: Sorting;
-  }): Promise<[Article[], number]> {
+  }): Promise<[ArticlesEntity[], number]> {
     const q = dataQuery(['title'], params);
 
     return await this.articleRepository.findAndCount(q);
   }
 
-  async updateArticle(id: string, data: UpdateArticleDto): Promise<Article> {
+  async updateArticle(id: string, data: UpdateArticleDto): Promise<ArticlesEntity> {
     const articleEntity = await this.articleRepository.findOne({
       where: { id },
     });

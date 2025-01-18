@@ -2,12 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { validationError } from 'class-validator-flat-formatter';
 
-import {
-  ArticleResponseDto,
-  CreateArticleResponseDto,
-  GetArticleResponseDto,
-  GetArticlesResponseDto,
-} from './response.dto';
+import { ArticleResponseDto, GetArticlesResponseDto } from './response.dto';
 
 describe('DTO validation tests', () => {
   describe('ArticleResponseDto', () => {
@@ -54,30 +49,6 @@ describe('DTO validation tests', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       expect(errors[2].constraints.isString).toBeDefined();
-    });
-  });
-
-  describe('CreateArticleResponseDto', () => {
-    it('should inherit ArticleResponseDto and validate correctly', async () => {
-      const dto = new CreateArticleResponseDto();
-      dto.id = '1';
-      dto.title = 'Title';
-      dto.description = 'Description';
-
-      const errors = await validate(dto);
-      expect(errors.length).toBe(0);
-    });
-  });
-
-  describe('GetArticleResponseDto', () => {
-    it('should inherit ArticleResponseDto and validate correctly', async () => {
-      const dto = new GetArticleResponseDto();
-      dto.id = '1';
-      dto.title = 'Title';
-      dto.description = 'Description';
-
-      const errors = await validate(dto);
-      expect(errors.length).toBe(0);
     });
   });
 

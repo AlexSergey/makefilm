@@ -1,9 +1,9 @@
-import { Actor } from '@api/modules/movie/entities/actor.entity';
-import { Director } from '@api/modules/movie/entities/director.entity';
-import { Genre } from '@api/modules/movie/entities/genre.entity';
-import { Movie } from '@api/modules/movie/entities/movie.entity';
-import { MovieModule } from '@api/modules/movie/movie.module';
-import { MovieService } from '@api/modules/movie/movie.service';
+import { Actor } from '@api/modules/movies/entities/actors.entity';
+import { Director } from '@api/modules/movies/entities/directors.entity';
+import { Genre } from '@api/modules/movies/entities/genres.entity';
+import { Movie } from '@api/modules/movies/entities/movies.entity';
+import { MoviesModule } from '@api/modules/movies/movies.module';
+import { MoviesService } from '@api/modules/movies/movies.service';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';
@@ -11,15 +11,15 @@ import { DataSource } from 'typeorm';
 import { bootstrap } from './app/app.init';
 import { mockMovies } from './mocks/movies.mock';
 
-describe('MovieController (e2e)', () => {
+describe('MoviesController (e2e)', () => {
   let app: INestApplication;
-  let service: MovieService;
+  let service: MoviesService;
   let dataSource: DataSource;
 
   beforeAll(async () => {
-    app = await bootstrap<MovieModule>(MovieModule);
+    app = await bootstrap<MoviesModule>(MoviesModule);
     dataSource = await app.resolve<DataSource>(DataSource);
-    service = app.get<MovieService>(MovieService);
+    service = app.get<MoviesService>(MoviesService);
     await service.createMovie(mockMovies);
   });
 

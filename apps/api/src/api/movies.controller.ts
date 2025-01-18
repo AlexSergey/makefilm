@@ -2,16 +2,16 @@ import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@ne
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
-import { FillDatabaseDto } from '../modules/movie/dtos/fill-database.dto';
-import { Actor } from '../modules/movie/entities/actor.entity';
-import { Director } from '../modules/movie/entities/director.entity';
-import { Genre } from '../modules/movie/entities/genre.entity';
-import { Movie } from '../modules/movie/entities/movie.entity';
-import { MovieService } from '../modules/movie/movie.service';
+import { FillDatabaseDto } from '../modules/movies/dtos/fill-database.dto';
+import { Actor } from '../modules/movies/entities/actors.entity';
+import { Director } from '../modules/movies/entities/directors.entity';
+import { Genre } from '../modules/movies/entities/genres.entity';
+import { Movie } from '../modules/movies/entities/movies.entity';
+import { MoviesService } from '../modules/movies/movies.service';
 
 @Controller('movies')
-export class MovieController {
-  constructor(private readonly movieService: MovieService) {}
+export class MoviesController {
+  constructor(private readonly movieService: MoviesService) {}
 
   @Post('/fill-database')
   @UseInterceptors(FileInterceptor('file'))

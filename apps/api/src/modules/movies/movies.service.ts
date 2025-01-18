@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
 
 import { FillDatabaseDto } from './dtos/fill-database.dto';
-import { Actor } from './entities/actor.entity';
-import { Director } from './entities/director.entity';
-import { Genre } from './entities/genre.entity';
-import { Movie } from './entities/movie.entity';
-import { ActorRepository } from './repositories/actor.repository';
-import { DirectorRepository } from './repositories/director.repository';
-import { GenreRepository } from './repositories/genre.repository';
-import { MovieRepository } from './repositories/movie.repository';
+import { Actor } from './entities/actors.entity';
+import { Director } from './entities/directors.entity';
+import { Genre } from './entities/genres.entity';
+import { Movie } from './entities/movies.entity';
+import { ActorsRepository } from './repositories/actors.repository';
+import { DirectorsRepository } from './repositories/directors.repository';
+import { GenresRepository } from './repositories/genres.repository';
+import { MoviesRepository } from './repositories/movies.repository';
 
 @Injectable()
-export class MovieService {
+export class MoviesService {
   constructor(
-    private readonly movieRepository: MovieRepository,
-    private readonly actorRepository: ActorRepository,
-    private readonly directorRepository: DirectorRepository,
-    private readonly genreRepository: GenreRepository,
+    private readonly movieRepository: MoviesRepository,
+    private readonly actorRepository: ActorsRepository,
+    private readonly directorRepository: DirectorsRepository,
+    private readonly genreRepository: GenresRepository,
   ) {}
 
   async createMovie(createMoviesDto: FillDatabaseDto[]): Promise<void> {

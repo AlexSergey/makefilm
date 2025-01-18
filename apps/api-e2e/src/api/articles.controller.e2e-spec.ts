@@ -1,4 +1,4 @@
-import { ArticleModule } from '@api/modules/article/article.module';
+import { ArticlesModule } from '@api/modules/articles/articles.module';
 import { CreateArticleDto } from '@makefilm/contracts';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
@@ -7,14 +7,14 @@ import { DataSource } from 'typeorm';
 import { bootstrap } from './app/app.init';
 import { Clean, createArticles, Data, getLastId } from './mocks/articles.mock';
 
-describe('ArticleController (e2e)', () => {
+describe('ArticlesController (e2e)', () => {
   let app: INestApplication;
 
   let clean: Clean;
   let data: Data;
 
   beforeAll(async () => {
-    app = await bootstrap<ArticleModule>(ArticleModule);
+    app = await bootstrap<ArticlesModule>(ArticlesModule);
   });
 
   afterAll(async () => {

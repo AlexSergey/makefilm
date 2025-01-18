@@ -1,6 +1,6 @@
 import { IsArray, IsNumber, IsString, IsUUID } from 'class-validator';
 
-import { CreatorTypes } from '../entities/creator.entity';
+import { CreatorTypes } from '../entities/creators.entity';
 
 export class FillDatabaseDto {
   @IsArray()

@@ -9,8 +9,8 @@ import loggerConfig from './common/logger/config/logger.config';
 import { LoggerModule } from './common/logger/logger.module';
 import { MetricsModule } from './common/metrics/metrics.module';
 import appConfig from './config/app.config';
-import { ArticleModule } from './modules/article/article.module';
-import { MovieModule } from './modules/movie/movie.module';
+import { ArticlesModule } from './modules/articles/articles.module';
+import { MoviesModule } from './modules/movies/movies.module';
 
 @Module({
   controllers: [],
@@ -27,8 +27,8 @@ import { MovieModule } from './modules/movie/movie.module';
       },
       useClass: TypeOrmConfigService,
     }),
-    ArticleModule,
-    MovieModule,
+    ArticlesModule,
+    MoviesModule,
   ],
   providers: [],
 })

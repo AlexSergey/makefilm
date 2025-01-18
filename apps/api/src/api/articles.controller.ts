@@ -7,13 +7,13 @@ import { Pagination, PaginationParams } from '../common/database/decorators/pagi
 import { SearchParams } from '../common/database/decorators/search.decorator';
 import { Sorting, SortParams } from '../common/database/decorators/sort.decorator';
 import { ResponseValidationInterceptor } from '../interceptors/response-validator.interceptor';
-import { ArticleService } from '../modules/article/article.service';
-import { ArticleValue } from '../modules/article/values/article.value';
+import { ArticlesService } from '../modules/articles/articles.service';
+import { ArticleValue } from '../modules/articles/values/article.value';
 
 @ApiTags('articles')
 @Controller('articles')
-export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+export class ArticlesController {
+  constructor(private readonly articleService: ArticlesService) {}
 
   @ApiBody({ type: CreateArticleDto })
   @ApiOperation({ summary: 'Creating a new article' })

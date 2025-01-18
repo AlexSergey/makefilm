@@ -5,11 +5,11 @@ import { DataSource } from 'typeorm';
 import databaseConfig from '../../common/database/config/database.config';
 import loggerConfig from '../../common/logger/config/logger.config';
 import appConfig from '../../config/app.config';
-import { MovieService } from './movie.service';
-import { ActorRepository } from './repositories/actor.repository';
-import { DirectorRepository } from './repositories/director.repository';
-import { GenreRepository } from './repositories/genre.repository';
-import { MovieRepository } from './repositories/movie.repository';
+import { MoviesService } from './movies.service';
+import { ActorsRepository } from './repositories/actors.repository';
+import { DirectorsRepository } from './repositories/directors.repository';
+import { GenresRepository } from './repositories/genres.repository';
+import { MoviesRepository } from './repositories/movies.repository';
 
 const mockMovies = [
   {
@@ -25,7 +25,7 @@ const mockMovies = [
 ];
 
 describe('MovieService', () => {
-  let service: MovieService;
+  let service: MoviesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -36,28 +36,28 @@ describe('MovieService', () => {
         }),
       ],
       providers: [
-        MovieService,
+        MoviesService,
         {
-          provide: MovieRepository,
+          provide: MoviesRepository,
           useValue: {
             getAllMovies: jest.fn().mockResolvedValue(mockMovies),
             getMovieById: jest.fn().mockResolvedValue(mockMovies[0]),
           },
         },
         {
-          provide: DirectorRepository,
+          provide: DirectorsRepository,
           useValue: {
             getDirectorsWithMovies: jest.fn().mockResolvedValue(mockMovies[0].directors),
           },
         },
         {
-          provide: ActorRepository,
+          provide: ActorsRepository,
           useValue: {
             getActorsWithMovies: jest.fn().mockResolvedValue(mockMovies[0].actors),
           },
         },
         {
-          provide: GenreRepository,
+          provide: GenresRepository,
           useValue: {
             getGenresWithActors: jest.fn().mockResolvedValue(mockMovies[0].genres),
             getGenresWithDirectors: jest.fn().mockResolvedValue(mockMovies[0].genres),
@@ -68,7 +68,7 @@ describe('MovieService', () => {
       ],
     }).compile();
 
-    service = module.get<MovieService>(MovieService);
+    service = module.get<MoviesService>(MoviesService);
   });
 
   it('should be defined', () => {

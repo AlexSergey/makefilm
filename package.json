@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "nx run-many -t build",
+    "build": "npm run typeorm:linker && nx run-many -t build",
     "format": "npm run format:package && nx format:write",
     "format:package": "sort-package-json",
     "lint": "nx run-many -t lint",

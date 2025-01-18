@@ -1,4 +1,4 @@
-import { CreatorTypes } from '@api/modules/movie/entities/creator.entity';
+import { CreatorTypes } from '@api/modules/movies/entities/creators.entity';
 
 export const mockMovies = [
   {
