@@ -13,6 +13,14 @@ module.exports = {
       optimization: false,
       outputHashing: 'none',
       target: 'node',
+      transformers: [
+        {
+          name: '@nestjs/swagger/plugin',
+          options: {
+            dtoFileNameSuffix: ['.dto.ts'],
+          },
+        },
+      ],
       tsConfig: './tsconfig.app.json',
     }),
   ],

@@ -1,12 +1,6 @@
-import {
-  CreateArticleDto,
-  CreateArticleResponseDto,
-  GetArticleResponseDto,
-  GetArticlesResponseDto,
-  UpdateArticleDto,
-} from '@makefilm/contracts';
+import { ArticleResponseDto, CreateArticleDto, GetArticlesResponseDto, UpdateArticleDto } from '@makefilm/contracts';
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Filter, FilterParams } from '../common/database/decorators/filter.decorator';
 import { Pagination, PaginationParams } from '../common/database/decorators/pagination.decorator';
@@ -25,8 +19,12 @@ export class ArticleController {
   @ApiOperation({ summary: 'Creating a new article' })
   @ApiResponse({ description: 'The article has been successfully created', status: HttpStatus.CREATED })
   @ApiResponse({ description: 'Error creating article', status: HttpStatus.BAD_REQUEST })
+  @ApiOkResponse({
+    description: 'List of articles',
+    type: ArticleResponseDto,
+  })
   @Post()
-  @UseInterceptors(new ResponseValidationInterceptor(CreateArticleResponseDto))
+  @UseInterceptors(new ResponseValidationInterceptor(ArticleResponseDto))
   create(@Body() createArticleDto: CreateArticleDto): Promise<ArticleValue> {
     return this.articleService.create(createArticleDto);
   }
@@ -46,8 +44,11 @@ export class ArticleController {
     type: Number,
   })
   @ApiQuery({ description: 'Filtering by fields', name: 'where', required: false, type: String })
-  @ApiResponse({ description: 'List of articles', status: HttpStatus.OK, type: [ArticleValue] })
   @ApiResponse({ description: 'Error while getting articles', status: HttpStatus.BAD_REQUEST })
+  @ApiOkResponse({
+    description: 'List of articles',
+    type: GetArticlesResponseDto,
+  })
   @Get()
   @UseInterceptors(new ResponseValidationInterceptor(GetArticlesResponseDto))
   findAll(
@@ -55,10 +56,7 @@ export class ArticleController {
     @SortParams() sort: Sorting,
     @SearchParams() search: null | string,
     @FilterParams() filter: Filter,
-  ): Promise<{
-    articles: ArticleValue[];
-    total: number;
-  }> {
+  ): Promise<GetArticlesResponseDto> {
     return this.articleService.findAll({ filter, pagination, search, sort });
   }
 
@@ -67,7 +65,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Article found', status: HttpStatus.OK, type: ArticleValue })
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Get(':id')
-  @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
+  @UseInterceptors(new ResponseValidationInterceptor(ArticleResponseDto))
   findOne(@Param('id') id: string): Promise<ArticleValue> {
     return this.articleService.findOne(id);
   }
@@ -88,7 +86,7 @@ export class ArticleController {
   @ApiResponse({ description: 'Error updating article', status: HttpStatus.BAD_REQUEST })
   @ApiResponse({ description: 'Article not found', status: HttpStatus.NOT_FOUND })
   @Patch(':id')
-  @UseInterceptors(new ResponseValidationInterceptor(GetArticleResponseDto))
+  @UseInterceptors(new ResponseValidationInterceptor(ArticleResponseDto))
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto): Promise<ArticleValue> {
     return this.articleService.update(id, updateArticleDto);
   }

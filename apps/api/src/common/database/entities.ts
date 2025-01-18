@@ -1,4 +1,3 @@
-export * from '../../modules/article/entities/article';
 export * from '../../modules/movie/entities/actor.entity';
 export * from '../../modules/movie/entities/creator.entity';
 export * from '../../modules/movie/entities/director.entity';

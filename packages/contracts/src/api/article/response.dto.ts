@@ -12,10 +12,6 @@ export class ArticleResponseDto {
   title: string;
 }
 
-export class CreateArticleResponseDto extends ArticleResponseDto {}
-
-export class GetArticleResponseDto extends ArticleResponseDto {}
-
 export class GetArticlesResponseDto {
   @IsArray()
   @Type(() => ArticleResponseDto)
