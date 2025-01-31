@@ -41,7 +41,6 @@ services:
       - migrations
     networks:
       - makefilm-network
-    command: "node dist/main.js"
 
   api-e2e:
     container_name: "makefilm_api_e2e_${NODE_ENV}"
