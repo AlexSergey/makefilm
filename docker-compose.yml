@@ -1,39 +1,113 @@
-version: "3"
-
 services:
-  dev:
+  database:
+    image: postgres:13
+    container_name: "makefilm_db_${NODE_ENV}"
+    ports:
+      - "${DATABASE_PORT}:5432"
+    environment:
+      POSTGRES_DB: poll_db
+      POSTGRES_USER: poll_user
+      POSTGRES_PASSWORD: poll_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - makefilm-network
+
+  migrations:
+    container_name: "makefilm_migrations_${NODE_ENV}"
     build:
-      context: .
-      dockerfile: ./Dockerfile
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
+      target: migrations
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - database
+    networks:
+      - makefilm-network
+
+  api:
+    container_name: "makefilm_api_${NODE_ENV}"
+    build:
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
       target: prod
-    restart: always
-    ports:
-      - 3005:3005
-    command:
-      - npm run start:dev
+      args:
+        NODE_ENV: ${NODE_ENV}
+        DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - database
+      - migrations
+    networks:
+      - makefilm-network
+    command: "node dist/main.js"
 
-  makefilm_db:
-    image: postgres:13
-    container_name: makefilm_db
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_DB: poll_db
-      POSTGRES_USER: poll_user
-      POSTGRES_PASSWORD: poll_password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  api-e2e:
+    container_name: "makefilm_api_e2e_${NODE_ENV}"
+    build:
+      context: ./
+      dockerfile: ./apps/api-e2e/Dockerfile
+      args:
+        NODE_ENV: ${NODE_ENV}
+        API_URL: "http://makefilm_api_${NODE_ENV}:3005"
+        DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - database
+      - migrations
+      - api
+    networks:
+      - makefilm-network
 
-  makefilm_db_tests_local:
-    image: postgres:13
-    container_name: makefilm_db_tests_local
-    environment:
-      POSTGRES_DB: poll_db
-      POSTGRES_USER: poll_user
-      POSTGRES_PASSWORD: poll_password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  web:
+    container_name: "makefilm_web_${NODE_ENV}"
+    build:
+      context: ./
+      dockerfile: ./apps/web/Dockerfile
+      args:
+        NODE_ENV: ${NODE_ENV}
+        API_URL: "http://localhost"
+        DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - database
+      - migrations
+      - api
+    networks:
+      - makefilm-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    container_name: "makefilm"
     ports:
-      - '5433:5432'
+      - "80:80"
+    depends_on:
+      - api
+      - web
+    networks:
+      - makefilm-network
+
+  web-e2e:
+    container_name: "makefilm_web_e2e_${NODE_ENV}"
+    build:
+      context: ./
+      dockerfile: ./apps/web-e2e/Dockerfile
+      args:
+        NODE_ENV: ${NODE_ENV}
+        DATABASE_URL: ${DATABASE_URL}
+        WEB_BASE_URL: "http://makefilm:80"
+    depends_on:
+      - database
+      - migrations
+      - api
+      - nginx
+    networks:
+      - makefilm-network
+
 volumes:
   postgres_data:
+
+networks:
+  makefilm-network:
+    driver: bridge

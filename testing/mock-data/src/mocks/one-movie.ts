@@ -1,6 +1,6 @@
 import { CreatorTypes } from '@api/modules/movies/entities/creators.entity';
 
-export const mockMovies = [
+export const mock1Movie = [
   {
     actors: [{ id: '73273635-2a3b-4216-8d3b-f9a40d5506a4', name: 'Actor 1', type: [CreatorTypes.actor] }],
     description: 'Horror film description',

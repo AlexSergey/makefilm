@@ -1,6 +1,8 @@
 import loadable from '@loadable/component';
 import { Navigate } from 'react-router-dom';
 
+import { MovieDetails } from './components/movie.details';
+import { MovieList } from './components/movie.list';
 import { MainPage } from './pages/main';
 
 const Home = loadable(() => import('./pages/home.loadable'), {
@@ -25,8 +27,16 @@ export const routes = [
   {
     children: [
       {
-        element: <Home />,
-        path: '/',
+        children: [
+          {
+            element: <MovieList />,
+            path: '/',
+          },
+          {
+            element: <MovieDetails />,
+            path: '/movies/:id',
+          },
+        ],
       },
     ],
     element: <MainPage />,

@@ -26,7 +26,7 @@ export const AppDataSource = new DataSource({
   },
   host: process.env.DATABASE_HOST,
   keepConnectionAlive: true,
-  logging: process.env.NODE_ENV !== 'production',
+  logging: process.env.DATABASE_SHOW_LOGS,
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   password: process.env.DATABASE_PASSWORD,
   port: process.env.DATABASE_PORT ? parseInt(process.env.DATABASE_PORT, 10) : 5432,

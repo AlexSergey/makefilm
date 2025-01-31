@@ -19,14 +19,13 @@ export const bootstrap = async <T>(TestabeModule: Type<T>): Promise<INestApplica
     controllers: [],
     imports: [
       ConfigModule.forRoot({
-        envFilePath: ['.env.tests'],
         isGlobal: true,
         load: [appConfig, loggerConfig, databaseConfig],
       }),
       LoggerModule,
       MetricsModule,
       TypeOrmModule.forRootAsync({
-        dataSourceFactory: async (options: DataSourceOptions) => {
+        dataSourceFactory: async (options: DataSourceOptions): Promise<DataSource> => {
           return new DataSource(options).initialize();
         },
         useClass: TypeOrmConfigService,

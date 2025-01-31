@@ -9,10 +9,29 @@ FROM base AS build
 COPY . .
 RUN npm run build
 
+# Migrations
+FROM base AS migrations
+COPY . .
+COPY .env .env
+RUN npm run build
+COPY ./ci/wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+RUN apk add --no-cache bash
+ARG NODE_ENV
+ARG DATABASE_PORT
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+WORKDIR /app
+ENTRYPOINT ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c "DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run"
+
 # Production
 FROM node:22-alpine AS prod
 WORKDIR /app
-COPY .env ./
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+COPY .env .env
 COPY package*.json ./
 RUN npm ci --prod --ignore-scripts
 COPY --from=build /app/dist/apps/api /app/dist
