@@ -4,6 +4,9 @@ module.exports = [
   ...baseConfig,
   {
     files: ['**/*.json'],
+    languageOptions: {
+      parser: require('jsonc-eslint-parser'),
+    },
     rules: {
       '@nx/dependency-checks': [
         'error',
@@ -11,9 +14,6 @@ module.exports = [
           ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs}'],
         },
       ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
     },
   },
 ];

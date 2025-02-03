@@ -4,6 +4,9 @@ module.exports = [
   ...baseConfig,
   {
     files: ['**/*.json'],
+    languageOptions: {
+      parser: require('jsonc-eslint-parser'),
+    },
     rules: {
       '@nx/dependency-checks': [
         'error',
@@ -12,8 +15,11 @@ module.exports = [
         },
       ],
     },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
+  },
+  {
+    // TODO: migrations folder issue
+    rules: {
+      'check-file/filename-naming-convention': 'off',
     },
   },
 ];
