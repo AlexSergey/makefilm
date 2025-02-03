@@ -20,6 +20,8 @@
       "@api/*": ["./apps/api/src/*"],
       "@makefilm/axios": ["packages/axios/src/index.ts"],
       "@makefilm/contracts": ["packages/contracts/src/index.ts"],
+      "@makefilm/database": ["database/src/index.ts"],
+      "@makefilm/entities": ["packages/entities/src/index.ts"],
       "@makefilm/mock-data": ["testing/mock-data/src/index.ts"],
       "@makefilm/testing-api-bootstrap": ["testing/api-bootstrap/src/index.ts"],
       "@makefilm/testing-database-manager": ["testing/database-manager/src/index.ts"],

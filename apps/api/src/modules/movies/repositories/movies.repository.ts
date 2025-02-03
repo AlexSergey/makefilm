@@ -1,12 +1,12 @@
+import { Actor } from '@makefilm/entities';
+import { Director } from '@makefilm/entities';
+import { Genre } from '@makefilm/entities';
+import { Movie } from '@makefilm/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 
 import { FillDatabaseDto } from '../dtos/fill-database.dto';
-import { Actor } from '../entities/actors.entity';
-import { Director } from '../entities/directors.entity';
-import { Genre } from '../entities/genres.entity';
-import { Movie } from '../entities/movies.entity';
 
 @Injectable()
 export class MoviesRepository extends Repository<Movie> {

@@ -1,4 +1,4 @@
-import { AppDataSource } from '@api/common/database/data-source';
+import { dataSource as _dataSource } from 'database/src/data-source';
 import { DataSource } from 'typeorm';
 
 export interface DatabaseManager {
@@ -10,7 +10,7 @@ export interface DatabaseManager {
 }
 
 export const databaseManager = async (): Promise<DatabaseManager> => {
-  const dataSource = await AppDataSource.initialize();
+  const dataSource = await _dataSource.initialize();
 
   const cleanupDatabase = async (): Promise<void> => {
     const entities = dataSource.entityMetadatas;

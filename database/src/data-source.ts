@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+import * as entities from '@makefilm/entities';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-export const AppDataSource = new DataSource({
+export const dataSource = new DataSource({
   cli: {
     entitiesDir: 'src',
 
@@ -9,7 +10,7 @@ export const AppDataSource = new DataSource({
   },
   database: process.env.DATABASE_NAME,
   dropSchema: false,
-  entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
+  entities: Object.values(entities),
   extra: {
     // based on https://node-postgres.com/api/pool
     // max connection pool size

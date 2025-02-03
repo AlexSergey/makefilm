@@ -106,6 +106,7 @@ services:
 
 volumes:
   postgres_data:
+  app_shared:
 
 networks:
   makefilm-network:

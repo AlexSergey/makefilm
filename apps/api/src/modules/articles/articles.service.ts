@@ -1,10 +1,10 @@
 import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
+import { ArticlesEntity } from '@makefilm/entities';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Filter } from '../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../common/database/decorators/sort.decorator';
-import { ArticlesEntity } from './entities/articles.entity';
 import { ArticlesRepository } from './repositories/articles.repository';
 import { ArticleValue } from './values/article.value';
 
