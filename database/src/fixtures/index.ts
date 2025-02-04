@@ -5,6 +5,8 @@ import { dataSource } from '../data-source';
 import { FillDatabaseDto } from './fill-database.dto';
 
 export const fillDatabase = async (createMoviesDto: FillDatabaseDto[], ds = dataSource) => {
+  await ds.initialize();
+
   for (const createMovieDto of createMoviesDto) {
     const queryRunner = ds.createQueryRunner();
     await queryRunner.connect();
