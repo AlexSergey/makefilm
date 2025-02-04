@@ -18,6 +18,10 @@ jobs:
       - name: Set up Docker Compose
         run: docker compose -f ci/docker-compose.lint.yml run lint
 
+      - name: Clean up containers
+        run: |
+          docker compose down lint
+
   build:
     name: Build Application
     runs-on: ubuntu-latest
@@ -30,6 +34,10 @@ jobs:
       - name: Set up Docker Compose
         run: docker compose -f ci/docker-compose.build.yml run build
 
+      - name: Clean up containers
+        run: |
+          docker compose down build
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -41,6 +49,10 @@ jobs:
 
       - name: Set up Docker Compose
         run: docker compose -f ci/docker-compose.unit-tests.yml run unit_tests
+
+      - name: Clean up containers
+        run: |
+          docker compose down unit_tests
 
   api-e2e-tests:
     name: API E2E Tests
