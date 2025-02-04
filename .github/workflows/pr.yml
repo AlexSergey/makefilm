@@ -20,7 +20,7 @@ jobs:
 
       - name: Clean up containers
         run: |
-          docker compose down lint
+          docker compose -f ci/docker-compose.lint.yml down lint
 
   build:
     name: Build Application
@@ -36,7 +36,7 @@ jobs:
 
       - name: Clean up containers
         run: |
-          docker compose down build
+          docker compose -f ci/docker-compose.build.yml down build
 
   unit-tests:
     name: Unit Tests
@@ -52,7 +52,7 @@ jobs:
 
       - name: Clean up containers
         run: |
-          docker compose down unit_tests
+          docker compose -f ci/docker-compose.unit-tests.yml down unit_tests
 
   api-e2e-tests:
     name: API E2E Tests
