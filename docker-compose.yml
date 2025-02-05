@@ -34,7 +34,7 @@ services:
     build:
       context: ./
       dockerfile: ./apps/api/Dockerfile
-      target: run_api
+      target: prod
       args:
         NODE_ENV: ${NODE_ENV}
         DATABASE_URL: ${DATABASE_URL}
