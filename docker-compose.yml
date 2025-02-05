@@ -37,7 +37,6 @@ services:
         NODE_ENV: ${NODE_ENV}
         DATABASE_URL: ${DATABASE_URL}
     depends_on:
-      - database
       - migrations
     networks:
       - makefilm-network
@@ -52,8 +51,6 @@ services:
         API_URL: "http://makefilm_api_${NODE_ENV}:3005"
         DATABASE_URL: ${DATABASE_URL}
     depends_on:
-      - database
-      - migrations
       - api
     networks:
       - makefilm-network
@@ -68,8 +65,6 @@ services:
         API_URL: "http://localhost"
         DATABASE_URL: ${DATABASE_URL}
     depends_on:
-      - database
-      - migrations
       - api
     networks:
       - makefilm-network
@@ -97,9 +92,6 @@ services:
         DATABASE_URL: ${DATABASE_URL}
         WEB_BASE_URL: "http://makefilm:80"
     depends_on:
-      - database
-      - migrations
-      - api
       - nginx
     networks:
       - makefilm-network

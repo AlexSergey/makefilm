@@ -22,7 +22,7 @@ ARG DATABASE_PORT
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 WORKDIR /app
-ENTRYPOINT ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c "DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run && tail -f /dev/null"
+ENTRYPOINT ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c "DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run && touch /app_shared/db_ready && tail -f /dev/null"
 
 # Production
 FROM node:22-alpine AS prod
@@ -38,4 +38,4 @@ COPY --from=build /app/dist/apps/api /app/dist
 COPY ./ci/wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 RUN apk add --no-cache bash
-ENTRYPOINT ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c "node dist/main.js"
+CMD while [ ! -f "/app_shared/db_ready" ]; do sleep 1; done && "node dist/main.js"
