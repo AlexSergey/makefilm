@@ -26,13 +26,15 @@ services:
       - database
     networks:
       - makefilm-network
+    volumes:
+      - app_shared:/shared
 
   api:
     container_name: "makefilm_api_${NODE_ENV}"
     build:
       context: ./
       dockerfile: ./apps/api/Dockerfile
-      target: prod
+      target: run_api
       args:
         NODE_ENV: ${NODE_ENV}
         DATABASE_URL: ${DATABASE_URL}
@@ -40,6 +42,8 @@ services:
       - migrations
     networks:
       - makefilm-network
+    volumes:
+      - app_shared:/shared
 
   api-e2e:
     container_name: "makefilm_api_e2e_${NODE_ENV}"
