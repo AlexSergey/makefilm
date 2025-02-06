@@ -97,6 +97,7 @@ services:
         NODE_ENV: ${NODE_ENV}
         DATABASE_URL: ${DATABASE_URL}
         WEB_BASE_URL: "http://makefilm:80"
+        API_URL: "http://makefilm_api_${NODE_ENV}:3005"
     depends_on:
       - nginx
     networks:
