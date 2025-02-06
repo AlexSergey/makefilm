@@ -18,6 +18,7 @@
     "parse": "nx run wiki-scraper:parse",
     "pre-commit": "lint-staged",
     "prepare": "husky",
+    "seeds": "echo 'no seeds yet'",
     "start": "nx run-many -t serve",
     "start:api": "nx run api:serve",
     "start:api:e2e": "cross-env DATABASE_URL=\"postgresql://poll_user:poll_password@localhost:5433/poll_db?schema=public\" nx run api:serve",

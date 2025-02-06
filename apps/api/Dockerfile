@@ -9,8 +9,8 @@ FROM base AS build
 COPY . .
 RUN npm run build
 
-# Migrations
-FROM base AS migrations
+# DB Configurator
+FROM base AS db_configurator
 COPY . .
 COPY .env .env
 RUN npm run build
@@ -21,8 +21,23 @@ ARG NODE_ENV
 ARG DATABASE_PORT
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
+ENV FIXTURES=false
+ENV SEEDS=false
 WORKDIR /app
-ENTRYPOINT ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c "DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run && touch /shared/db_ready && tail -f /dev/null"
+ENTRYPOINT ["/bin/bash", "-c", " \
+  ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c \"DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run\"; \
+  if [ \"$SEEDS\" == \"true\" ] && [ \"$FIXTURES\" == \"true\" ]; then \
+    npm run seeds && npm run fixtures; \
+  elif [ \"$SEEDS\" == \"true\" ]; then \
+    npm run seeds; \
+  elif [ \"$FIXTURES\" == \"true\" ]; then \
+    npm run fixtures; \
+  else \
+    echo 'No operations to run'; \
+  fi; \
+  touch /shared/db_ready; \
+  tail -f /dev/null \
+"]
 
 # Production
 FROM node:22-alpine AS prod

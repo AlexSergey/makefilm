@@ -13,15 +13,17 @@ services:
     networks:
       - makefilm-network
 
-  migrations:
-    container_name: "makefilm_migrations_${NODE_ENV}"
+  db_configurator:
+    container_name: "makefilm_db_configurator_${NODE_ENV}"
     build:
       context: ./
       dockerfile: ./apps/api/Dockerfile
-      target: migrations
+      target: db_configurator
     environment:
       - NODE_ENV=${NODE_ENV}
       - DATABASE_URL=${DATABASE_URL}
+      - FIXTURES=${FIXTURES}
+      - SEEDS=${SEEDS}
     depends_on:
       - database
     networks:
@@ -39,7 +41,7 @@ services:
         NODE_ENV: ${NODE_ENV}
         DATABASE_URL: ${DATABASE_URL}
     depends_on:
-      - migrations
+      - db_configurator
     networks:
       - makefilm-network
     volumes:
