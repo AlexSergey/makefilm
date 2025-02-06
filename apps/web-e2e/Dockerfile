@@ -2,6 +2,7 @@ FROM node:22-alpine
 WORKDIR /app
 COPY . .
 RUN npm install
+RUN npx playwright install
 ARG API_URL
 ENV API_URL=${API_URL}
 ARG WEB_BASE_URL
