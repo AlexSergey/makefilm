@@ -1,7 +1,7 @@
-version: '3'
+version: '3.8'
 
 services:
-  release:
+  api-release:
     image: makefilm/api
     container_name: makefilm-api
     build:

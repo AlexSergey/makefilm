@@ -1,6 +1,6 @@
 export interface AppConfig {
   apiPrefix: string;
-  appUrl: string;
+  apiUrl: string;
   backendDomain: string;
   fallbackLanguage: string;
   frontendDomain?: string;

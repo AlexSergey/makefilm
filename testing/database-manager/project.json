@@ -1,0 +1,21 @@
+{
+  "name": "database-manager",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "testing/database-manager/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/testing/database-manager",
+        "main": "testing/database-manager/src/index.ts",
+        "tsConfig": "testing/database-manager/tsconfig.lib.json",
+        "format": ["cjs"],
+        "assets": ["testing/database-manager/*.md"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

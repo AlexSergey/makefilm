@@ -1,8 +1,7 @@
+import { Director } from '@makefilm/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { Director } from '../entities/directors.entity';
 
 @Injectable()
 export class DirectorsRepository extends Repository<Director> {

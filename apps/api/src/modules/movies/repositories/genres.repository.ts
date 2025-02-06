@@ -1,8 +1,7 @@
+import { Genre } from '@makefilm/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { Genre } from '../entities/genres.entity';
 
 @Injectable()
 export class GenresRepository extends Repository<Genre> {

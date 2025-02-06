@@ -45,7 +45,7 @@ export class ErrorMetricsInterceptor implements NestInterceptor {
                 route: request.path,
                 timestamp: new Date().toISOString(),
               },
-              err.statusCode || 500,
+              err.status || err.statusCode || 500,
             ),
         );
       }),

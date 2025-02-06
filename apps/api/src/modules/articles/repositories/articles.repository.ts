@@ -1,4 +1,5 @@
 import { CreateArticleDto, UpdateArticleDto } from '@makefilm/contracts';
+import { ArticlesEntity } from '@makefilm/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,7 +8,6 @@ import { Filter } from '../../../common/database/decorators/filter.decorator';
 import { Pagination } from '../../../common/database/decorators/pagination.decorator';
 import { Sorting } from '../../../common/database/decorators/sort.decorator';
 import { dataQuery } from '../../../common/database/utils/data-query.util';
-import { ArticlesEntity } from '../entities/articles.entity';
 
 @Injectable()
 export class ArticlesRepository extends Repository<ArticlesEntity> {
