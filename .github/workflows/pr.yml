@@ -69,3 +69,19 @@ jobs:
       - name: Clean up containers
         run: |
           docker compose down database db_configurator api api-e2e
+
+  web-e2e-tests:
+    name: Web E2E Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: NODE_ENV=test FIXTURES=true SEEDS=false DATABASE_PORT=5433 DATABASE_URL="postgresql://poll_user:poll_password@makefilm_db_test:5432/poll_db?schema=public" docker compose --env-file .env up --abort-on-container-exit database db_configurator api web nginx web-e2e
+
+      - name: Clean up containers
+        run: |
+          docker compose down database db_configurator api web nginx web-e2e
