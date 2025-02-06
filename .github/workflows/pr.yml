@@ -73,7 +73,7 @@ jobs:
   web-e2e-tests:
     name: Web E2E Tests
     runs-on: ubuntu-latest
-    needs: unit-tests
+    needs: api-e2e-tests
 
     steps:
       - name: Checkout Code
