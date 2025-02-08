@@ -11,9 +11,9 @@ RUN npm run build
 
 # DB Configurator
 FROM base AS db_configurator
+WORKDIR /app
 COPY . .
 COPY .env .env
-RUN npm run build
 COPY ./ci/wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 RUN apk add --no-cache bash
@@ -23,15 +23,14 @@ ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 ENV FIXTURES=false
 ENV SEEDS=false
-WORKDIR /app
 ENTRYPOINT ["/bin/bash", "-c", " \
-  ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c \"DATABASE_URL=${DATABASE_URL} DATABASE_TYPE=postgres npm run migration:run\"; \
+  ./wait-for-it.sh makefilm_db_$NODE_ENV:5432 -- sh -c \"npx cross-env DATABASE_URL=${DATABASE_URL} cross-env DATABASE_TYPE=postgres npm run migration:run\"; \
   if [ \"$SEEDS\" == \"true\" ] && [ \"$FIXTURES\" == \"true\" ]; then \
-    npm run seeds && npm run fixtures; \
+    npx cross-env DATABASE_URL=${DATABASE_URL} cross-env DATABASE_TYPE=postgres npm run seeds && cross-env DATABASE_URL=${DATABASE_URL} cross-env DATABASE_TYPE=postgres npm run fixtures; \
   elif [ \"$SEEDS\" == \"true\" ]; then \
-    npm run seeds; \
+    npx cross-env DATABASE_URL=${DATABASE_URL} cross-env DATABASE_TYPE=postgres npm run seeds; \
   elif [ \"$FIXTURES\" == \"true\" ]; then \
-    npm run fixtures; \
+    npx cross-env DATABASE_URL=${DATABASE_URL} cross-env DATABASE_TYPE=postgres npm run fixtures; \
   else \
     echo 'No operations to run'; \
   fi; \
