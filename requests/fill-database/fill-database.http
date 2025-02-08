@@ -1,0 +1,11 @@
+### POST fill database
+POST http://localhost:3005/api/movies/fill-database
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="fill-database.json"
+Content-Type: application/json
+
+< ./fill-database.json
+--WebAppBoundary--
+###

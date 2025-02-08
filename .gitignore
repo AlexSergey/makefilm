@@ -61,9 +61,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-*.env
-
 # next.js build output
 .next
 
@@ -95,10 +92,22 @@ test-reports
 .eslintrc.custom.js
 .prettierrc.custom.js
 
-# dotenv file ought to ignore
-.env
-
 # Custom rules
 .clinic
+.vagrant
 
 # Database
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.nx/cache
+.nx/workspace-data
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+tools/wiki-scraper/parsed
+tools/wiki-scraper/posters
+tools/wiki-scraper/src/data2

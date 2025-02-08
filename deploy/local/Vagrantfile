@@ -1,0 +1,45 @@
+servers = [{
+   "name" => "deploy",
+   "type" => "deploy",
+}, {
+  "name" => "manager1",
+  "type" => "manager",
+}, {
+  "name" => "worker1",
+  "type" => "worker",
+}]
+
+Vagrant.configure("2") do |config|
+	servers.each_with_index do |server, idx|
+        config.vm.define "server#{idx}" do |web|
+            port_offset = idx + 1
+            web.vm.box = "utm/ubuntu-24.04"
+            web.vm.network "forwarded_port", id: "ssh", host: 2222 + port_offset, guest: 22
+
+            is_deploy_node = server['type'] == "deploy"
+            is_manager_node = server['type'] == "manager"
+            is_worker_node = server['type'] == "worker"
+
+            if is_deploy_node
+                web.vm.network "forwarded_port", id: "tcp1", host: 3001, guest: 3001
+                web.vm.network "forwarded_port", id: "tcp2", host: 3002, guest: 3002
+                web.vm.network "forwarded_port", id: "tcp3", host: 80, guest: 80
+            end
+            web.vm.hostname = server['name']
+
+            web.vm.provision "shell" do |s|
+                ssh_pub_key = File.readlines("#{Dir.home}/.ssh/serg.pub").first.strip
+                s.inline = <<-SHELL
+                echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+                echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
+                SHELL
+            end
+
+            web.vm.provider "utm" do |u|
+                u.name = server['name']
+                u.cpus = 1
+                u.memory = 2048
+            end
+        end
+    end
+end

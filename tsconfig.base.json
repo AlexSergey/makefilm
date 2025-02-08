@@ -1,0 +1,36 @@
+{
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["./apps/api/src/*"],
+      "@makefilm/axios": ["packages/axios/src/index.ts"],
+      "@makefilm/contracts": ["packages/contracts/src/index.ts"],
+      "@makefilm/database": ["database/src/index.ts"],
+      "@makefilm/entities": ["packages/entities/src/index.ts"],
+      "@makefilm/mock-data": ["testing/mock-data/src/index.ts"],
+      "@makefilm/testing-api-bootstrap": ["testing/api-bootstrap/src/index.ts"],
+      "@makefilm/testing-database-manager": ["testing/database-manager/src/index.ts"],
+      "@makefilm/testing-mock-data": ["testing/mock-data/src/index.ts"],
+      "@makefilm/wiki-scraper": ["tools/wiki-scraper/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
