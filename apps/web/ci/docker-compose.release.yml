@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web-release:
+    image: makefilm/web
+    container_name: makefilm-web
+    build:
+      context: ../../../
+      dockerfile: ./apps/web/Dockerfile
+      target: prod
+    restart: always

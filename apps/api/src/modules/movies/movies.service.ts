@@ -1,10 +1,10 @@
+import { Actor } from '@makefilm/entities';
+import { Director } from '@makefilm/entities';
+import { Genre } from '@makefilm/entities';
+import { Movie } from '@makefilm/entities';
 import { Injectable } from '@nestjs/common';
 
 import { FillDatabaseDto } from './dtos/fill-database.dto';
-import { Actor } from './entities/actors.entity';
-import { Director } from './entities/directors.entity';
-import { Genre } from './entities/genres.entity';
-import { Movie } from './entities/movies.entity';
 import { ActorsRepository } from './repositories/actors.repository';
 import { DirectorsRepository } from './repositories/directors.repository';
 import { GenresRepository } from './repositories/genres.repository';

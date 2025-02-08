@@ -19,6 +19,9 @@ class EnvironmentVariablesValidator {
   @IsString()
   API_PREFIX: string;
 
+  @IsString()
+  API_URL: string;
+
   @IsOptional()
   @IsString()
   APP_FALLBACK_LANGUAGE: string;
@@ -32,9 +35,6 @@ class EnvironmentVariablesValidator {
   @Max(65535)
   @Min(0)
   APP_PORT: number;
-
-  @IsString()
-  APP_URL: string;
 
   @IsOptional()
   // eslint-disable-next-line camelcase
@@ -62,7 +62,7 @@ export default registerAs<AppConfig>('app', () => {
   return {
     adminEmail: process.env.ADMIN_EMAIL,
     apiPrefix: process.env.API_PREFIX || 'api',
-    appUrl: process.env.APP_URL || 'http://localhost:3005',
+    apiUrl: process.env.API_URL || 'http://localhost:3005',
     backendDomain: process.env.BACKEND_DOMAIN ?? 'http://localhost',
     fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
     frontendDomain: process.env.FRONTEND_DOMAIN,

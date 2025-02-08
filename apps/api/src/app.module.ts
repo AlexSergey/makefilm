@@ -10,6 +10,7 @@ import { LoggerModule } from './common/logger/logger.module';
 import { MetricsModule } from './common/metrics/metrics.module';
 import appConfig from './config/app.config';
 import { ArticlesModule } from './modules/articles/articles.module';
+import { HealthModule } from './modules/health/health.module';
 import { MoviesModule } from './modules/movies/movies.module';
 
 @Module({
@@ -29,6 +30,7 @@ import { MoviesModule } from './modules/movies/movies.module';
     }),
     ArticlesModule,
     MoviesModule,
+    HealthModule,
   ],
   providers: [],
 })

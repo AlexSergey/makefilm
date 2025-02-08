@@ -1,12 +1,12 @@
+import { Actor } from '@makefilm/entities';
+import { Director } from '@makefilm/entities';
+import { Genre } from '@makefilm/entities';
+import { Movie } from '@makefilm/entities';
 import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
 import { FillDatabaseDto } from '../modules/movies/dtos/fill-database.dto';
-import { Actor } from '../modules/movies/entities/actors.entity';
-import { Director } from '../modules/movies/entities/directors.entity';
-import { Genre } from '../modules/movies/entities/genres.entity';
-import { Movie } from '../modules/movies/entities/movies.entity';
 import { MoviesService } from '../modules/movies/movies.service';
 
 @Controller('movies')
