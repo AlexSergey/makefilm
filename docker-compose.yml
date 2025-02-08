@@ -68,7 +68,7 @@ services:
       dockerfile: ./apps/web/Dockerfile
       args:
         NODE_ENV: ${NODE_ENV}
-        API_URL: "http://localhost"
+        API_URL: ${API_URL}
         DATABASE_URL: ${DATABASE_URL}
     depends_on:
       - api

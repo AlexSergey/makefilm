@@ -6,7 +6,7 @@ ARG API_URL
 ENV API_URL=${API_URL}
 RUN npm install
 RUN npx nx reset
-RUN npx env-cmd cross-env cross-env API_URL=${API_URL} nx run web:build --verbose
+RUN npx env-cmd cross-env API_URL=${API_URL} nx run web:build --verbose
 
 # Web
 FROM nginx:1.27.3 AS prod
