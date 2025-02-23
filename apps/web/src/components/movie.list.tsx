@@ -1,9 +1,8 @@
+import { fetchMovies } from '@makefilm/fe-business-logic';
+import { AppDispatch, RootState } from '@makefilm/fe-business-logic';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import { AppDispatch, RootState } from '../store';
-import { fetchMovies } from '../store/movies.slice';
 
 export const MovieList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

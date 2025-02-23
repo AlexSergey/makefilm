@@ -1,0 +1,19 @@
+{
+  "name": "fe-business-logic",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/fe-business-logic/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/fe-business-logic",
+        "main": "packages/fe-business-logic/src/index.ts",
+        "tsConfig": "packages/fe-business-logic/tsconfig.lib.json",
+        "assets": ["packages/fe-business-logic/*.md"]
+      }
+    }
+  }
+}

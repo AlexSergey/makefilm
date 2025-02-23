@@ -1,11 +1,11 @@
 import { MoviesModule } from '@api/modules/movies/movies.module';
 import { MoviesService } from '@api/modules/movies/movies.service';
-import { rest } from '@makefilm/axios';
 import { DatabaseManager, databaseManager } from '@makefilm/testing-database-manager';
 import { mock1Movie } from '@makefilm/testing-mock-data';
 import { INestApplication } from '@nestjs/common';
 
 import { bootstrap } from '../app/app.bootstrap';
+import { rest } from '../utils/rest';
 
 describe('MoviesController (e2e)', () => {
   let dbManager: DatabaseManager;

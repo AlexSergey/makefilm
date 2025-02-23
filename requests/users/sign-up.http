@@ -1,0 +1,9 @@
+### Send POST request with json body
+POST http://localhost:3005/api/user-management/users
+Content-Type: application/json
+
+{
+  "email": "test2@test.com",
+  "username": "new_user",
+  "password": "new_password"
+}

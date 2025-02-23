@@ -1,0 +1,21 @@
+### Sign In user
+POST http://localhost:3005/api/user-management/auth/local/sign-in
+Content-Type: application/json
+
+{
+  "email": "test2@test.com",
+  "password": "new_password"
+}
+
+### Sign In user with existed session
+
+POST http://localhost:3005/api/user-management/auth/local/sign-in
+Authorization-Session: 39c16ee0-b050-4dbc-9c9b-3db43410afbb
+Content-Type: application/json
+
+{
+  "email": "test2@test.com",
+  "password": "new_password"
+}
+
+### 41a55675-400a-48e5-8a20-4c63b18c8c44

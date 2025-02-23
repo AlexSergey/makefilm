@@ -1,4 +1,4 @@
-import { rest } from '@makefilm/axios';
+import { rest } from '@makefilm/fe-business-logic';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -41,7 +41,8 @@ export const MovieDetails: React.FC = () => {
       try {
         const response = await rest.get(`/movies/${id}`);
         setMovie(response.data.data);
-      } catch (err) {
+      } catch (e) {
+        console.error(e);
         setError('Failed to fetch movie details');
       } finally {
         setLoading(false);
