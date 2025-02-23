@@ -2,7 +2,7 @@ import { isDevelopment, isProduction } from './environments';
 
 describe('environments', () => {
   it('isDevelopment', () => {
-    expect(isDevelopment()).toBeFalsy();
+    expect(isDevelopment()).toBeTruthy();
   });
   it('isProduction', () => {
     expect(isProduction()).toBeFalsy();

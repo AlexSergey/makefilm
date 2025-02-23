@@ -1,8 +1,8 @@
-import { rest } from '@makefilm/axios';
 import { configureStore } from '@reduxjs/toolkit';
 import MockAdapter from 'axios-mock-adapter';
 
-import moviesReducer, { fetchMovies } from './movies.slice';
+import { rest } from '../utils/rest';
+import { fetchMovies, moviesReducer } from './movies.slice';
 
 const mock = new MockAdapter(rest);
 
