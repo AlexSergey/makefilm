@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { PASSWORD_URL } from '../constants/url';
 import { JwtService } from '../modules/jwt/jwt.service';

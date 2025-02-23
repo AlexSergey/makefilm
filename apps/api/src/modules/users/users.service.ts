@@ -3,7 +3,7 @@ import { UsersEntity } from '@makefilm/entities';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { DeleteResult, Raw, Repository, UpdateResult } from 'typeorm';
 
 import { Pagination } from '../../common/database/decorators/pagination.decorator';

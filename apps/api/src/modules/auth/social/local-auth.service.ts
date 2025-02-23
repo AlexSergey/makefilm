@@ -1,6 +1,6 @@
 import { UsersEntity } from '@makefilm/entities';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { UsersService } from '../../users/users.service';
 
