@@ -46,6 +46,8 @@ ENV NODE_ENV=${NODE_ENV}
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 COPY .env .env
+COPY bin bin
+COPY assets assets
 COPY package*.json ./
 RUN npm ci --prod --ignore-scripts
 COPY --from=build /app/dist/apps/api /app/dist

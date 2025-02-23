@@ -37,17 +37,14 @@ class EnvironmentVariablesValidator {
   APP_PORT: number;
 
   @IsOptional()
-  // eslint-disable-next-line camelcase
   @IsUrl({ require_tld: false })
   BACKEND_DOMAIN: string;
 
   @IsOptional()
-  // eslint-disable-next-line camelcase
   @IsUrl({ require_tld: false })
   FRONTEND_DOMAIN: string;
 
   @IsOptional()
-  // eslint-disable-next-line camelcase
   @IsUrl({ require_tld: false })
   FRONTEND_REDIRECT: string;
 

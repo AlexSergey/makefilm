@@ -1,0 +1,8 @@
+### Verify user
+GET http://localhost:3005/api/user-management/auth/verify
+Authorization-Session: 02dcefaf-897b-4abe-a939-c78248c23fcd
+
+###
+
+GET http://localhost:3005/api/hello
+Authorization-Session: 76ff9a82-0d6a-4fdc-a634-c8d88ccafd46

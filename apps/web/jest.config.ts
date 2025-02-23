@@ -2,6 +2,7 @@ export default {
   coverageDirectory: '../../coverage/apps/web',
   displayName: 'web',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  passWithNoTests: true,
   preset: '../../jest.preset.js',
   setupFiles: ['./jest.setup.ts'],
   transform: {

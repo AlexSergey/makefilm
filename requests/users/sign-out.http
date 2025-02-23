@@ -1,0 +1,3 @@
+### Sign out user
+GET http://localhost:3005/api/user-management/auth/sign-out
+authorization-session: 0277f6a7-b0f9-4c78-a697-72234d505a02

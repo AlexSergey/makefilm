@@ -1,8 +1,8 @@
-import { rest } from '@makefilm/axios';
 import { CreateArticleDto } from '@makefilm/contracts';
 import { DatabaseManager, databaseManager } from '@makefilm/testing-database-manager';
 
 import { ArticlesEntity } from '../../../../packages/entities/src/entities/articles.entity';
+import { rest } from '../utils/rest';
 
 describe('ArticlesController (e2e)', () => {
   let dbManager: DatabaseManager;

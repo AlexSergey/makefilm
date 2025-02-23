@@ -1,13 +1,13 @@
-import loadable from '@loadable/component';
-import { Navigate } from 'react-router-dom';
+/*import loadable from '@loadable/component';
+import { Navigate } from 'react-router-dom';*/
 
 import { MovieDetails } from './components/movie.details';
 import { MovieList } from './components/movie.list';
 import { MainPage } from './pages/main';
 
-const Home = loadable(() => import('./pages/home.loadable'), {
+/*const Home = loadable(() => import('./pages/home.loadable'), {
   fallback: <div>Loading...</div>,
-});
+});*/
 
 /*
 import { withRoleAccess } from './features/user-management/hoc/role-access.hoc';
