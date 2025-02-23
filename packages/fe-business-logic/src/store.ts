@@ -1,11 +1,9 @@
 import { isDevelopment } from '@makefilm/utils';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { authReducer } from './slices/auth.slice';
 import { moviesReducer } from './slices/movies.slice';
 
 const rootReducer = combineReducers({
-  auth: authReducer,
   movies: moviesReducer,
 });
 
