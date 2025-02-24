@@ -7,6 +7,7 @@ const meta: Meta<typeof WebComponents> = {
   title: 'WebComponents',
 };
 export default meta;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Story = StoryObj<typeof WebComponents>;
 
 export const Primary = {
