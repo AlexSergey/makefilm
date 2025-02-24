@@ -111,3 +111,6 @@ vitest.config.*.timestamp*
 tools/wiki-scraper/parsed
 tools/wiki-scraper/posters
 tools/wiki-scraper/src/data2
+
+
+storybook-static

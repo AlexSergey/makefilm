@@ -30,6 +30,7 @@
       "@makefilm/testing-database-manager": ["testing/database-manager/src/index.ts"],
       "@makefilm/testing-mock-data": ["testing/mock-data/src/index.ts"],
       "@makefilm/utils": ["packages/utils/src/index.ts"],
+      "@makefilm/web-components": ["packages/web-components/src/index.ts"],
       "@makefilm/wiki-scraper": ["tools/wiki-scraper/src/index.ts"]
     }
   },
